@@ -1,0 +1,57 @@
+name: Fetch media
+
+# A scheduled task drops a small JSON file into incoming/ with a temporary
+# download URL (for example a rendered Reel) and the path it should live at.
+# This workflow downloads the file, checks it, commits it, and removes the request.
+on:
+  push:
+    paths:
+      - "incoming/*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: fetch-media
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download requested files
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for req in incoming/*.json; do
+            url=$(jq -r '.url' "$req")
+            dest=$(jq -r '.path' "$req")
+            case "$dest" in
+              social/*.mp4|social/*.jpg|social/*.png) ;;
+              *) echo "Refusing path $dest"; git rm -q "$req"; continue ;;
+            esac
+            mkdir -p "$(dirname "$dest")"
+            curl -fsSL --retry 3 -o "$dest" "$url"
+            size=$(stat -c %s "$dest")
+            kind=$(file -b --mime-type "$dest")
+            echo "$dest $size bytes $kind"
+            if [ "$size" -lt 10000 ] || ! echo "$kind" | grep -qE '^(video|image)/'; then
+              echo "Bad download for $dest"; rm -f "$dest"; exit 1
+            fi
+            git add "$dest"
+            git rm -q "$req"
+          done
+      - name: Commit
+        run: |
+          git config user.name "Pan-cheung"
+          git config user.email "cheungpan63@gmail.com"
+          if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
+          git commit -m "Fetch media from incoming requests"
+          git push
+      - name: Request a Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
