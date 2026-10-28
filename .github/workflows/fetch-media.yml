@@ -30,7 +30,7 @@ jobs:
             url=$(jq -r '.url' "$req")
             dest=$(jq -r '.path' "$req")
             case "$dest" in
-              social/*.mp4|social/*.jpg|social/*.png) ;;
+              social/*.mp4|social/*.jpg|social/*.png|social/*.mp3) ;;
               *) echo "Refusing path $dest"; git rm -q "$req"; continue ;;
             esac
             mkdir -p "$(dirname "$dest")"
@@ -38,7 +38,7 @@ jobs:
             size=$(stat -c %s "$dest")
             kind=$(file -b --mime-type "$dest")
             echo "$dest $size bytes $kind"
-            if [ "$size" -lt 10000 ] || ! echo "$kind" | grep -qE '^(video|image)/'; then
+            if [ "$size" -lt 10000 ] || ! echo "$kind" | grep -qE '^(video|image|audio)/'; then
               echo "Bad download for $dest"; rm -f "$dest"; exit 1
             fi
             git add "$dest"
