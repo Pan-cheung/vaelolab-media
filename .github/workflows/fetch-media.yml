@@ -27,6 +27,7 @@ jobs:
           set -euo pipefail
           shopt -s nullglob
           for req in incoming/*.json; do
+            case "$(basename "$req")" in tts-*) continue ;; esac  # voiceover requests belong to tts.yml
             url=$(jq -r '.url' "$req")
             dest=$(jq -r '.path' "$req")
             case "$dest" in
