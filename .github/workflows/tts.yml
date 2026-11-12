@@ -1,0 +1,46 @@
+name: Text to speech
+
+# Drop incoming/tts-<name>.json with {"text": ..., "voice": ..., "rate": "+8%", "pitch": "+0Hz", "path": "social/YYYY-MM/vo-<name>.mp3"}.
+# This workflow speaks it with the free Microsoft Edge neural voices (edge-tts), saves the mp3
+# and a word timing file (.vtt) next to it, commits both and removes the request.
+on:
+  push:
+    paths:
+      - "incoming/tts-*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tts
+  cancel-in-progress: false
+
+jobs:
+  speak:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install --quiet edge-tts
+      - name: Speak
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for req in incoming/tts-*.json; do
+            dest=$(jq -r '.path' "$req")
+            case "$dest" in social/*.mp3) ;; *) echo "Refusing $dest"; git rm -q "$req"; continue ;; esac
+            mkdir -p "$(dirname "$dest")"
+            jq -r '.text' "$req" > /tmp/text.txt
+            edge-tts --voice "$(jq -r '.voice // "en-US-AvaMultilingualNeural"' "$req")" \
+              --rate="$(jq -r '.rate // "+0%"' "$req")" --pitch="$(jq -r '.pitch // "+0Hz"' "$req")" \
+              -f /tmp/text.txt --write-media "$dest" --write-subtitles "${dest%.mp3}.vtt"
+            git add "$dest" "${dest%.mp3}.vtt"
+            git rm -q "$req"
+          done
+      - name: Commit
+        run: |
+          git config user.name "Pan-cheung"
+          git config user.email "cheungpan63@gmail.com"
+          if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
+          git commit -m "Add voiceover"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
