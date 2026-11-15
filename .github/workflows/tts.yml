@@ -31,11 +31,20 @@ jobs:
             case "$dest" in social/*.mp3) ;; *) echo "Refusing $dest"; git rm -q "$req"; continue ;; esac
             mkdir -p "$(dirname "$dest")"
             jq -r '.text' "$req" > /tmp/text.txt
-            edge-tts --voice "$(jq -r '.voice // "en-US-AvaMultilingualNeural"' "$req")" \
-              --rate="$(jq -r '.rate // "+0%"' "$req")" --pitch="$(jq -r '.pitch // "+0Hz"' "$req")" \
-              -f /tmp/text.txt --write-media "$dest" --write-subtitles "${dest%.mp3}.vtt"
-            if [ "$(jq -r '.words // false' "$req")" = "true" ]; then python3 .github/scripts/tts_words.py "$req"; git add "${dest%.mp3}.words.json"; fi
+            ok=0
+            for try in 1 2 3; do
+              if timeout 120 edge-tts --voice "$(jq -r '.voice // "en-US-AvaMultilingualNeural"' "$req")" \
+                --rate="$(jq -r '.rate // "+0%"' "$req")" --pitch="$(jq -r '.pitch // "+0Hz"' "$req")" \
+                -f /tmp/text.txt --write-media "$dest" --write-subtitles "${dest%.mp3}.vtt"; then ok=1; break; fi
+              echo "retry $try for $req"; sleep 10
+            done
+            if [ "$ok" != 1 ]; then echo "FAILED $req"; continue; fi
+            if [ "$(jq -r '.words // false' "$req")" = "true" ]; then
+              for try in 1 2 3; do timeout 120 python3 .github/scripts/tts_words.py "$req" && break; echo "words retry $try"; sleep 10; done
+              [ -s "${dest%.mp3}.words.json" ] && git add "${dest%.mp3}.words.json"
+            fi
             git add "$dest" "${dest%.mp3}.vtt"
+            sleep 3
             git rm -q "$req"
           done
       - name: Commit
