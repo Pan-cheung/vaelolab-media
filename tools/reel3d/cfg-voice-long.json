@@ -1,0 +1,69 @@
+{
+ "slug": "voice-long",
+ "mp3": "vo-voice-long.mp3",
+ "words": "vo-voice-long.words.json",
+ "text": "This voice model is free, and it runs in your browser. It's called Zonos 3 Mini, from Zyphra. Here's what it can do. It speaks 43 languages. It can copy a voice from a five to ten second clip. It's small enough to run on a laptop or a phone, and a web version runs inside a browser tab, with nothing to install. The Apache 2.0 license allows commercial use, so you could voice your own product videos with it. One rule. Clone only your own voice, or one you have written permission to use. The model card doesn't cover watermarks, so how it's used is on you. Send this to the friend paying for voiceovers every month.",
+ "out": "/home/claude/reel/reel-voice-long.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_voice.js",
+ "hook": "Free voice AI. *43 languages.*",
+ "cta": "Send this to the friend <b>paying for voiceovers</b> every month",
+ "beats": [
+  {
+   "q": "Zonos 3 Mini",
+   "a": "by Zyphra",
+   "t0": "@It's called",
+   "ta": "@from Zyphra"
+  },
+  {
+   "n": "43",
+   "q": "languages",
+   "t0": "@It speaks"
+  },
+  {
+   "q": "Voice clone from a",
+   "a": "5 to 10 second clip",
+   "t0": "@It can copy",
+   "ta": "@five to"
+  },
+  {
+   "q": "Runs on a laptop",
+   "a": "or a phone",
+   "t0": "@It's small",
+   "ta": "@or a phone"
+  },
+  {
+   "q": "Web version",
+   "a": "nothing to install",
+   "t0": "@and a web",
+   "ta": "@with nothing"
+  },
+  {
+   "q": "Apache 2.0 license",
+   "a": "commercial use allowed",
+   "t0": "@The Apache",
+   "ta": "@allows"
+  },
+  {
+   "q": "Clone <b>your own</b> voice",
+   "a": "or with written permission",
+   "t0": "@One rule",
+   "ta": "@or one"
+  },
+  {
+   "q": "No watermark section",
+   "a": "use it responsibly",
+   "t0": "@The model card",
+   "ta": "@so how"
+  }
+ ],
+ "scene": {
+  "browser": 0.0,
+  "langs": "@43 languages",
+  "clip": "@It can copy",
+  "devices": "@It's small",
+  "web": "@and a web",
+  "license": "@The Apache"
+ },
+ "css": "#num{width:150px;border-radius:60px;font-size:64px}"
+}

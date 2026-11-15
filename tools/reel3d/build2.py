@@ -11,10 +11,11 @@ TMP = '/tmp/reel-' + cfg['slug']
 MP3, WORDS = cfg['mp3'], json.load(open(cfg['words']))
 if cfg.get('text'):  # carry punctuation from the script onto the timed words
     toks = cfg['text'].split(); j = 0
+    nt = lambda x: re.sub(r'[^a-z0-9]', '', x.lower())
     for w in WORDS:
-        k = re.sub(r'[^a-z0-9]', '', w[2].lower())
-        while j < len(toks) and re.sub(r'[^a-z0-9]', '', toks[j].lower()) != k: j += 1
-        if j < len(toks): w[2] = toks[j]; j += 1
+        k = nt(w[2]); n = len(w[2].split()); jj = j
+        while jj < len(toks) and nt(''.join(toks[jj:jj + n])) != k: jj += 1
+        if jj < len(toks): w[2] = ' '.join(toks[jj:jj + n]); j = jj + n
 vo = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', MP3], capture_output=True, text=True).stdout)
 total = vo + OUTRO
 norm = lambda w: re.sub(r'[^a-z0-9]', '', w.lower())
@@ -94,15 +95,15 @@ background:radial-gradient(ellipse 85% 45% at 50% 55%,#2a5c3d 0%,#133621 55%,#0b
 .logo{{display:block;width:100%;height:auto;overflow:visible}}.logo [data-k]{{stroke-dasharray:1 1}}
 #bar{{position:absolute;left:0;top:0;height:10px;background:#f4d96c;width:0}}
 .ov{{position:absolute;left:60px;right:60px;text-align:center}}
-#hook{{top:400px;font-size:{cfg.get('hook_size', 120)}px;line-height:.98;font-weight:800;letter-spacing:-2.5px;text-shadow:0 6px 30px rgba(0,0,0,.4)}}
+#hook{{top:230px;font-size:{cfg.get('hook_size', 120)}px;line-height:.98;font-weight:800;letter-spacing:-2.5px;text-shadow:0 6px 30px rgba(0,0,0,.4)}}
 #hook b{{color:#f4d96c}}
-#card{{top:400px;display:flex;flex-direction:column;align-items:center;gap:22px}}
+#card{{top:230px;display:flex;flex-direction:column;align-items:center;gap:22px}}
 #num{{width:96px;height:96px;border-radius:50%;background:#f4d96c;color:#101a14;font-weight:800;font-size:56px;display:flex;align-items:center;justify-content:center}}
 #num:empty{{display:none}}
 #q{{font-size:{cfg.get('q_size', 92)}px;font-weight:800;letter-spacing:-1.5px;line-height:1.0;text-shadow:0 6px 30px rgba(0,0,0,.35)}}
 #a{{background:#f2f3ef;color:#133621;font-weight:800;font-size:60px;padding:14px 38px;border-radius:999px}}
 #a:empty{{display:none}}
-#cta{{top:400px;font-size:76px;font-weight:800;line-height:1.02;letter-spacing:-1.5px;text-shadow:0 6px 30px rgba(0,0,0,.4)}}#cta b{{color:#f4d96c}}
+#cta{{top:230px;font-size:76px;font-weight:800;line-height:1.02;letter-spacing:-1.5px;text-shadow:0 6px 30px rgba(0,0,0,.4)}}#cta b{{color:#f4d96c}}
 #capt{{position:absolute;left:60px;right:60px;top:1450px;text-align:center}}
 #capt div{{display:inline-block;background:rgba(10,24,16,.74);border-radius:24px;padding:12px 28px;font-size:54px;font-weight:650;line-height:1.2}}
 #capt span{{opacity:.32}}#capt span.on{{opacity:1}}

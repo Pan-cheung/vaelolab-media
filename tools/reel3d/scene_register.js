@@ -137,6 +137,11 @@ function explode(t) {
   // frame 0 starts mid air, pieces snap together by ASSEMBLE, then burst at BURST
   if (t < ASSEMBLE) return 0.62 * (1 - back(cl(t / ASSEMBLE)) ) + 0.0;
   if (t < BURST) return 0;
+  // "pick one job": snap back together, then burst again on the send line
+  if (C.pick && t >= C.pick - 0.1) {
+    if (t < C.finale) return 1 - eio(cl((t - C.pick + 0.1) / 0.5));
+    return back(cl((t - C.finale) / 0.55));
+  }
   return back(cl((t - BURST) / 0.55));
 }
 const focusPos = new THREE.Vector3(0, 0.05, 5.0);

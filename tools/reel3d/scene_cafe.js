@@ -82,7 +82,20 @@ const reply = plane(1.5, 0.42, new THREE.MeshBasicMaterial({ transparent: true, 
   x.fillStyle = '#133621'; x.font = '700 54px J'; x.textAlign = 'center'; x.fillText('Thanks for coming!', w / 2, 88); }) }));
 scene.add(reply);
 
-const DM = C.dm, BOOK = C.book, PHOTO = C.photo, REV = C.review, NEXT = C.next;
+const DM = C.dm, BOOK = C.book, PHOTO = C.photo, REV = C.review, NEXT = C.next, SUN = C.sunday;
+const cal = plane(1.9, 1.25, new THREE.MeshBasicMaterial({ transparent: true, map: tex(760, 500, (x, w, h) => {
+  x.fillStyle = '#f2f3ef'; x.beginPath(); x.roundRect(6, 6, w - 12, h - 12, 40); x.fill();
+  x.fillStyle = '#133621'; x.font = '800 54px J'; x.fillText('This week', 40, 80);
+  ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach((d, i) => {
+    const cx = 70 + i * 103; x.fillStyle = '#133621'; x.font = '700 40px J'; x.textAlign = 'center'; x.fillText(d, cx, 160);
+    x.fillStyle = i === 6 ? '#d7dbd4' : '#f4d96c'; x.beginPath(); x.roundRect(cx - 42, 190, 84, 84, 18); x.fill();
+    x.fillStyle = '#133621'; if (i !== 6) { x.font = '800 44px J'; x.fillText('✓', cx, 248); }
+    x.fillStyle = i % 2 ? '#d7dbd4' : '#f4d96c'; x.beginPath(); x.roundRect(cx - 42, 300, 84, 84, 18); x.fill();
+    x.textAlign = 'left';
+  });
+  x.fillStyle = '#133621'; x.font = '600 38px J'; x.fillText('Posts queued', 40, 450);
+}) }));
+scene.add(cal);
 const keyBase = key.intensity, ambBase = amb.intensity;
 window.render3d = function (t) {
   // lights snap on in the first second (hook), night during the DM beat
@@ -110,9 +123,11 @@ window.render3d = function (t) {
   flash.position.copy(camObj.position); flash.intensity = f * 40; menuMat.emissiveIntensity = 0.15 + f * 0.8;
   // stars + reply
   stars.forEach((s, i) => { const k = back((t - REV - 0.15 - i * 0.1) / 0.35) * (1 - cl((t - NEXT) / 0.3));
-    s.position.set(-0.95 + i * 0.48, 2.15 + Math.sin(t * 3 + i) * 0.05, 1.9); s.rotation.set(0, Math.sin(t * 2 + i) * 0.4, 0); s.scale.setScalar(Math.max(0.001, k)); });
-  const kr = back((t - REV - 0.75) / 0.4) * (1 - cl((t - NEXT) / 0.3));
+    s.position.set(-0.95 + i * 0.48, 2.15 + Math.sin(t * 3 + i) * 0.05, 1.9); s.rotation.set(0, Math.sin(t * 2 + i) * 0.4, 0); s.scale.setScalar(Math.max(0.001, k * (1 - cl((t - SUN + 0.1) / 0.3)))); });
+  const kr = back((t - REV - 0.75) / 0.4) * (1 - cl((t - SUN + 0.1) / 0.3));
   reply.position.set(0.1, 1.5, 2.3); reply.quaternion.copy(camera.quaternion); reply.scale.setScalar(Math.max(0.001, kr));
+  const kcal = back((t - SUN) / 0.45) * (1 - cl((t - NEXT) / 0.3));
+  cal.position.set(0.2, 1.75, 2.4); cal.quaternion.copy(camera.quaternion); cal.scale.setScalar(Math.max(0.001, kcal));
   // camera
   const push = eio(cl(t / 1.2));
   camera.position.set(Math.sin(t * 0.25) * 0.8, 4.6, 19 - 1.3 * push);

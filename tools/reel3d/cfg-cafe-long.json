@@ -1,0 +1,65 @@
+{
+ "slug": "cafe-long",
+ "mp3": "vo-cafe-long.mp3",
+ "words": "vo-cafe-long.words.json",
+ "text": "One owner. Zero staff. Picture a caf\u00e9 run like this. Here's how she keeps up. At midnight, a chatbot answers the DMs. Opening hours, the oat milk question, whether dogs are allowed. In the morning, online booking has already filled the tables, and reminder texts help cut the no shows. At noon, an AI photo tool turns one phone shot of the new pastry into a clean menu photo. After lunch, every review gets a reply, drafted in her voice and checked before it posts. And on Sunday, a scheduling tool queues the whole week of posts in one sitting. That's episode one. Next episode, the flower shop. Send this to the caf\u00e9 owner who does everything alone.",
+ "out": "/home/claude/reel/reel-cafe-long.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_cafe.js",
+ "hook": "1 owner. *0 staff.*",
+ "hook_size": 140,
+ "cta": "Send this to the caf\u00e9 owner who does <b>everything alone</b>",
+ "beats": [
+  {
+   "q": "Ep. 1 \u00b7 <b>The caf\u00e9</b>",
+   "t0": "@Picture a"
+  },
+  {
+   "n": 1,
+   "q": "DMs at midnight",
+   "a": "A chatbot answers",
+   "t0": "@At midnight",
+   "ta": "@a chatbot"
+  },
+  {
+   "n": 2,
+   "q": "Tables booked",
+   "a": "Reminders cut no shows",
+   "t0": "@In the morning",
+   "ta": "@reminder texts"
+  },
+  {
+   "n": 3,
+   "q": "New menu photos",
+   "a": "From one phone shot",
+   "t0": "@At noon",
+   "ta": "@one phone"
+  },
+  {
+   "n": 4,
+   "q": "Every review",
+   "a": "Replied in her voice",
+   "t0": "@After lunch",
+   "ta": "@drafted in"
+  },
+  {
+   "n": 5,
+   "q": "A week of posts",
+   "a": "Queued on Sunday",
+   "t0": "@And on Sunday",
+   "ta": "@queues the"
+  },
+  {
+   "q": "Next: <b>the flower shop</b>",
+   "t0": "@That's episode"
+  }
+ ],
+ "scene": {
+  "dm": "@At midnight",
+  "book": "@In the morning",
+  "photo": "@At noon",
+  "review": "@After lunch",
+  "sunday": "@And on Sunday",
+  "next": "@That's episode"
+ }
+}

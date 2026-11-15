@@ -1,0 +1,58 @@
+{
+ "slug": "receipts-long",
+ "mp3": "vo-receipts-long.mp3",
+ "words": "vo-receipts-long.words.json",
+ "text": "Still keeping receipts in a shoebox? Here's a better routine, in four steps. Step one. Snap a photo the day you get the receipt, before the print fades. Thermal paper doesn't last. Step two. Let the app read it. Many accounting apps pull out the store, the date, the total and the tax for you. Step three. Pick a category once, like supplies or fuel, and many apps remember it for next time. Step four. Keep the digital copy. In Canada, the CRA generally expects you to keep records for six years, and a clear electronic image can count. At tax time, everything's already sorted. Send this to the friend with a shoebox full of receipts.",
+ "out": "/home/claude/reel/reel-receipts-long.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_receipts.js",
+ "hook": "Receipts still in a *shoebox?*",
+ "cta": "Send this to the friend with a *shoebox of receipts*",
+ "beats": [
+  {
+   "n": 1,
+   "q": "Snap it <b>same day</b>",
+   "a": "Thermal paper fades",
+   "t0": "@Step one",
+   "ta": "@Thermal paper"
+  },
+  {
+   "n": 2,
+   "q": "Let the app read it",
+   "a": "Store \u00b7 Date \u00b7 Total \u00b7 Tax",
+   "t0": "@Step two",
+   "ta": "@the store"
+  },
+  {
+   "n": 3,
+   "q": "Pick a category <b>once</b>",
+   "a": "The app remembers",
+   "t0": "@Step three",
+   "ta": "@and many apps"
+  },
+  {
+   "n": 4,
+   "q": "Keep it <b>6 years</b>",
+   "a": "CRA record rule",
+   "t0": "@Step four",
+   "ta": "@In Canada"
+  },
+  {
+   "q": "Tax time: <b>sorted</b>",
+   "t0": "@At tax"
+  }
+ ],
+ "scene": {
+  "snap": "@Step one",
+  "read": "@Step two",
+  "cat": "@Step three",
+  "keep": "@Step four",
+  "taxtime": "@At tax"
+ },
+ "sfx": [
+  [
+   "whoosh",
+   0.05
+  ]
+ ]
+}

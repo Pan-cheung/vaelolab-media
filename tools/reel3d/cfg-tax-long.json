@@ -1,0 +1,71 @@
+{
+ "slug": "tax-long",
+ "mp3": "vo-tax-long.mp3",
+ "words": "vo-tax-long.words.json",
+ "text": "Same hundred dollar order. Four different tax bills. Say your shop is in Ontario, and you ship a hundred dollar order across Canada. To Calgary, you charge five dollars, because Alberta only has the five percent GST. Toronto, thirteen dollars of HST. Halifax, fourteen, since Nova Scotia cut its rate in April 2025. Moncton, fifteen. The same box costs your customer up to ten dollars more, depending on where it lands. For goods you deliver, the rate follows where the order goes, not where your shop is. So set your checkout to charge tax by shipping address, not by store location. And if you ship to British Columbia, Saskatchewan, Manitoba or Quebec, provincial sales tax can apply too, so check those rules first. Send this to the friend who just started shipping across Canada.",
+ "out": "/home/claude/reel/reel-tax-long.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_tax.js",
+ "hook": "$100 order. *4 tax bills.*",
+ "cta": "Send this to the friend who just started <b>shipping across Canada</b>",
+ "beats": [
+  {
+   "q": "From Ontario to",
+   "t0": "@Say your shop"
+  },
+  {
+   "q": "Up to <b>$10</b> more",
+   "a": "for the same box",
+   "t0": "@The same box",
+   "ta": "@depending"
+  },
+  {
+   "q": "Tax follows <b>the order</b>",
+   "a": "not your shop",
+   "t0": "@For goods",
+   "ta": "@not where"
+  },
+  {
+   "q": "Checkout: tax by",
+   "a": "shipping address",
+   "t0": "@So set",
+   "ta": "@by shipping"
+  },
+  {
+   "q": "BC \u00b7 SK \u00b7 MB \u00b7 QC",
+   "a": "Check PST rules too",
+   "t0": "@And if you",
+   "ta": "@provincial sales"
+  }
+ ],
+ "scene": {
+  "ship": "@Say your shop",
+  "cities": [
+   "@Calgary",
+   "@Toronto",
+   "@Halifax",
+   "@Moncton"
+  ],
+  "rule": "@For goods",
+  "diff": "@The same box",
+  "checkout": "@So set"
+ },
+ "sfx": [
+  [
+   "thud",
+   "@Calgary"
+  ],
+  [
+   "thud",
+   "@Toronto"
+  ],
+  [
+   "thud",
+   "@Halifax"
+  ],
+  [
+   "thud",
+   "@Moncton"
+  ]
+ ]
+}

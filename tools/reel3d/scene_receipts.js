@@ -35,14 +35,35 @@ const flash = plane(1.03, 2.0, new THREE.MeshBasicMaterial({ color: 0xffffff, tr
 // tidy folder for tax time
 const folder = new THREE.Group(); scene.add(folder);
 folder.add(rb(1.5, 0.22, 1.1, 0.05, mats.green));
-const ft = plane(1.3, 0.5, new THREE.MeshStandardMaterial({ map: tex(520, 200, (x, w, h) => { x.fillStyle = '#1d4a30'; x.fillRect(0, 0, w, h); x.fillStyle = '#f4d96c'; x.font = '800 110px J'; x.textAlign = 'center'; x.fillText('2026 ✓', w / 2, 140); }), roughness: 0.5 }));
+const ft = plane(1.3, 0.5, new THREE.MeshStandardMaterial({ map: tex(520, 200, (x, w, h) => { x.fillStyle = '#1d4a30'; x.fillRect(0, 0, w, h); x.fillStyle = '#f4d96c'; x.font = '800 110px J'; x.textAlign = 'center'; x.fillText('Sorted ✓', w / 2, 140); }), roughness: 0.5 }));
 ft.rotation.x = -Math.PI / 2; ft.position.y = 0.115; folder.add(ft);
 
 function drawScreen(t) {
   const w = 460, h = 880, x = sctx;
   x.fillStyle = '#0f1f16'; x.fillRect(0, 0, w, h);
   const kRead = cl((t - C.read) / 0.4);
-  if (kRead <= 0) {
+  if (C.keep && t >= C.keep) {
+    x.fillStyle = '#f4d96c'; x.font = '800 54px J'; x.fillText('Saved', 40, 90);
+    const k = back((t - C.keep) / 0.4);
+    x.save(); x.translate(w / 2, 330); x.scale(k, k);
+    x.fillStyle = 'rgba(242,243,239,0.12)'; x.beginPath(); x.arc(0, 0, 150, 0, 7); x.fill();
+    x.fillStyle = '#f2f3ef'; x.font = '800 150px J'; x.textAlign = 'center'; x.fillText('6', 0, 40);
+    x.font = '700 44px J'; x.fillText('years', 0, 100); x.restore();
+    x.textAlign = 'left'; x.fillStyle = '#f2f3ef'; x.font = '600 40px J';
+    x.fillText('Clear image', 60, 600); x.fillText('Full receipt', 60, 670); x.fillText('Easy to find', 60, 740);
+    x.fillStyle = '#f4d96c'; [600, 670, 740].forEach(y => { x.beginPath(); x.arc(w - 80, y - 14, 18, 0, 7); x.fill(); });
+  } else if (C.cat && t >= C.cat) {
+    x.fillStyle = '#f4d96c'; x.font = '800 54px J'; x.fillText('Category', 40, 90);
+    ['Supplies', 'Fuel', 'Meals', 'Rent'].forEach((c, i) => {
+      const y = 170 + i * 150, on = i === 0 || (i === 1 && t > C.cat + 1.2);
+      const k = cl((t - C.cat - i * 0.15) / 0.25);
+      x.globalAlpha = k;
+      x.fillStyle = on ? '#f4d96c' : 'rgba(242,243,239,0.12)'; x.beginPath(); x.roundRect(30, y, w - 60, 120, 60); x.fill();
+      x.fillStyle = on ? '#133621' : '#f2f3ef'; x.font = '700 52px J'; x.fillText(c, 70, y + 78);
+      if (on) { x.font = '800 52px J'; x.fillText('✓', w - 110, y + 80); }
+      x.globalAlpha = 1;
+    });
+  } else if (kRead <= 0) {
     // viewfinder
     x.strokeStyle = '#f4d96c'; x.lineWidth = 10; const m = 70;
     [[m, m, 1, 1], [w - m, m, -1, 1], [m, h - 250, 1, -1], [w - m, h - 250, -1, -1]].forEach(([a, b, sx, sy]) => { x.beginPath(); x.moveTo(a, b + 60 * sy); x.lineTo(a, b); x.lineTo(a + 60 * sx, b); x.stroke(); });

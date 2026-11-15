@@ -42,7 +42,21 @@ const wtex = tex(780, 510, (x, w, h) => {
 });
 const wp = plane(2.5, 1.6, new THREE.MeshStandardMaterial({ map: wtex, roughness: 0.5 })); wp.position.z = 0.045; win.add(wp);
 
-const BROWSER = C.browser, LANG = C.langs, CLIP = C.clip, LIC = C.license;
+const BROWSER = C.browser, LANG = C.langs, CLIP = C.clip, LIC = C.license, DEV = C.devices, WEB = C.web;
+// laptop and phone for "runs on a laptop or a phone"
+const laptop = new THREE.Group(); scene.add(laptop);
+const lbase = rb(1.9, 0.08, 1.25, 0.04, mats.cream); laptop.add(lbase);
+const lscr = new THREE.Group(); lscr.position.set(0, 0.04, -0.6); laptop.add(lscr);
+const lpanel = rb(1.9, 1.2, 0.06, 0.04, mats.ink); lpanel.position.y = 0.6; lscr.add(lpanel);
+const lwave = plane(1.7, 1.0, new THREE.MeshStandardMaterial({ map: tex(680, 400, (x, w, h) => { x.fillStyle = '#133621'; x.fillRect(0, 0, w, h);
+  for (let i = 0; i < 30; i++) { const hh = 30 + 220 * Math.abs(Math.sin(i * 1.3)); x.fillStyle = i % 2 ? '#f4d96c' : '#f2f3ef'; x.fillRect(40 + i * 20, 200 - hh / 2, 12, hh); } }), emissive: 0xffffff, emissiveIntensity: 0.5, roughness: 0.4 }));
+lwave.material.emissiveMap = lwave.material.map; lwave.position.set(0, 0.6, 0.035); lscr.add(lwave);
+lscr.rotation.x = -0.25;
+const phoneD = new THREE.Group(); scene.add(phoneD);
+phoneD.add(rb(0.55, 1.05, 0.06, 0.07, mats.ink));
+const pw = plane(0.49, 0.97, new THREE.MeshStandardMaterial({ map: tex(240, 470, (x, w, h) => { x.fillStyle = '#133621'; x.fillRect(0, 0, w, h);
+  for (let i = 0; i < 9; i++) { const hh = 30 + 150 * Math.abs(Math.sin(i * 1.9)); x.fillStyle = '#f4d96c'; x.fillRect(25 + i * 22, 235 - hh / 2, 12, hh); } }), emissive: 0xffffff, emissiveIntensity: 0.5 }));
+pw.material.emissiveMap = pw.material.map; pw.position.z = 0.035; phoneD.add(pw);
 window.render3d = function (t) {
   const a = amp(t);
   mic.rotation.y = -0.5 + Math.sin(t * 0.6) * 0.5;
@@ -67,7 +81,11 @@ window.render3d = function (t) {
   // browser window slides in at the start (hook) and again for the license line
   const kb = t < BROWSER + 2.2 ? back(t / 0.6) * (1 - cl((t - BROWSER - 1.8) / 0.4)) : 0;
   win.position.set(1.15, 3.25, 1.2); win.rotation.set(-0.05, -0.25, 0);
-  win.scale.setScalar(0.001); win.visible = false;
+  const kdv = back((t - DEV) / 0.45) * (1 - eio(cl((t - LIC + 0.2) / 0.4)));
+  laptop.position.set(-1.6, 0.35, 1.5); laptop.rotation.set(0.15, 0.45, 0); laptop.scale.setScalar(Math.max(0.001, kdv * 0.75));
+  phoneD.position.set(1.65, 1.0, 1.5); phoneD.rotation.set(0, -0.4, 0.08); phoneD.scale.setScalar(Math.max(0.001, kdv));
+  const kw = back((t - WEB) / 0.45) * (1 - eio(cl((t - LIC + 0.2) / 0.4)));
+  win.visible = kw > 0.01; win.position.set(0.0, 0.6, 2.6); win.rotation.set(-0.05, 0, 0); win.scale.setScalar(Math.max(0.001, kw * 0.6));
   // camera
   const push = eio(cl((t - CLIP) / 1.0));
   camera.position.set(Math.sin(t * 0.3) * 1.2, 3.4, 15.5 - push * 1.5);
