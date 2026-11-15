@@ -8,21 +8,30 @@ const back_ = rb(W, HW, 0.18, 0.04, mats.green); back_.position.set(0, HW / 2, -
 const left = rb(0.18, HW, D, 0.04, mats.cream); left.position.set(-W / 2 + 0.09, HW / 2, 0); room.add(left);
 const trim = rb(W, 0.1, 0.22, 0.03, mats.gold); trim.position.set(0, HW, -D / 2 + 0.09); room.add(trim);
 
-// window with day/night sky
-const skyCv = document.createElement('canvas'); skyCv.width = 300; skyCv.height = 220; const sk = skyCv.getContext('2d');
-const skyT = new THREE.CanvasTexture(skyCv); skyT.colorSpace = THREE.SRGBColorSpace;
-const win = plane(1.2, 0.9, new THREE.MeshStandardMaterial({ map: skyT, emissive: 0xffffff, emissiveMap: skyT, emissiveIntensity: 0.8 }));
-win.position.set(1.15, 1.45, -D / 2 + 0.19); room.add(win);
-const wf = rb(1.32, 1.02, 0.06, 0.03, mats.cream); wf.position.set(1.15, 1.45, -D / 2 + 0.16); room.add(wf);
-function drawSky(night) {
-  const g = sk.createLinearGradient(0, 0, 0, 220);
-  g.addColorStop(0, night > 0.5 ? '#0d1b2e' : '#8fd0f0'); g.addColorStop(1, night > 0.5 ? '#1c3550' : '#d9f1ff');
-  sk.fillStyle = g; sk.fillRect(0, 0, 300, 220);
-  if (night > 0.5) { sk.fillStyle = '#f4d96c'; sk.beginPath(); sk.arc(210, 70, 34, 0, 7); sk.fill(); sk.fillStyle = '#0d1b2e'; sk.beginPath(); sk.arc(225, 60, 30, 0, 7); sk.fill();
-    sk.fillStyle = '#fff'; [[50, 40], [90, 120], [140, 50], [260, 160], [30, 170]].forEach(([x, y]) => sk.fillRect(x, y, 4, 4)); }
-  else { sk.fillStyle = '#ffffff'; sk.beginPath(); sk.arc(80, 80, 26, 0, 7); sk.arc(110, 72, 32, 0, 7); sk.arc(140, 84, 24, 0, 7); sk.fill(); }
-  skyT.needsUpdate = true;
+// window with day/night sky: two fixed textures, cross faded, unlit so they keep their colour
+function skyTex(night) {
+  return tex(300, 220, (sk, w, h) => {
+    const g = sk.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, night ? '#0d1b2e' : '#4fa9dc'); g.addColorStop(1, night ? '#24425f' : '#a9dcf4');
+    sk.fillStyle = g; sk.fillRect(0, 0, w, h);
+    if (night) {
+      sk.fillStyle = '#f4d96c'; sk.beginPath(); sk.arc(210, 70, 34, 0, 7); sk.fill();
+      sk.fillStyle = '#132538'; sk.beginPath(); sk.arc(226, 60, 30, 0, 7); sk.fill();
+      sk.fillStyle = '#ffffff'; [[50, 40], [90, 120], [140, 50], [260, 160], [30, 170], [180, 150]].forEach(([x, y]) => sk.fillRect(x, y, 4, 4));
+    } else {
+      sk.fillStyle = '#f4d96c'; sk.beginPath(); sk.arc(235, 55, 26, 0, 7); sk.fill();
+      sk.fillStyle = '#ffffff'; sk.beginPath(); sk.arc(80, 95, 24, 0, 7); sk.arc(108, 86, 30, 0, 7); sk.arc(138, 97, 22, 0, 7); sk.fill();
+      sk.fillStyle = '#7fb069'; sk.fillRect(0, 185, w, 35);
+    }
+  });
 }
+const winDay = plane(1.2, 0.9, new THREE.MeshBasicMaterial({ map: skyTex(false), toneMapped: false }));
+const winNight = plane(1.2, 0.9, new THREE.MeshBasicMaterial({ map: skyTex(true), toneMapped: false, transparent: true, opacity: 0 }));
+winDay.position.set(1.15, 1.45, -D / 2 + 0.19); winNight.position.set(1.15, 1.45, -D / 2 + 0.195);
+room.add(winDay); room.add(winNight);
+const wf = rb(1.32, 1.02, 0.06, 0.03, mats.cream); wf.position.set(1.15, 1.45, -D / 2 + 0.16); room.add(wf);
+const mull = rb(0.05, 0.9, 0.03, 0.01, mats.cream); mull.position.set(1.15, 1.45, -D / 2 + 0.21); room.add(mull);
+const mull2 = rb(1.2, 0.05, 0.03, 0.01, mats.cream); mull2.position.set(1.15, 1.45, -D / 2 + 0.21); room.add(mull2);
 // menu board on the back wall
 const menuT = tex(400, 300, (x, w, h) => { x.fillStyle = '#101a14'; x.fillRect(0, 0, w, h); x.fillStyle = '#f4d96c'; x.font = '800 60px J'; x.textAlign = 'center'; x.fillText('MENU', w / 2, 70);
   x.fillStyle = '#f2f3ef'; for (let i = 0; i < 4; i++) { x.fillRect(50, 110 + i * 44, 200 - (i % 2) * 60, 12); x.fillRect(300, 110 + i * 44, 50, 12); } });
@@ -102,7 +111,7 @@ window.render3d = function (t) {
   const on = back(t / 0.45);
   const night = cl((t - DM + 0.1) / 0.3) * (1 - cl((t - BOOK + 0.2) / 0.3));
   key.intensity = keyBase * (0.25 + 0.75 * on) * (1 - 0.65 * night); amb.intensity = ambBase * (1 - 0.5 * night);
-  drawSky(night);
+  winNight.material.opacity = night;
   owner.position.y = 0.1 + Math.abs(Math.sin(t * 3.2)) * 0.04; owner.rotation.y = Math.sin(t * 0.8) * 0.4;
   room.rotation.y = -0.6 + Math.sin(t * 0.3) * 0.18;
   room.updateMatrixWorld();
