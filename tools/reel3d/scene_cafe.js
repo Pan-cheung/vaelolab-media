@@ -27,17 +27,18 @@ function skyTex(night) {
 }
 const winDay = plane(1.2, 0.9, new THREE.MeshBasicMaterial({ map: skyTex(false), toneMapped: false }));
 const winNight = plane(1.2, 0.9, new THREE.MeshBasicMaterial({ map: skyTex(true), toneMapped: false, transparent: true, opacity: 0 }));
-winDay.position.set(1.15, 1.45, -D / 2 + 0.19); winNight.position.set(1.15, 1.45, -D / 2 + 0.195);
+winDay.position.set(1.15, 1.45, -D / 2 + 0.24); winNight.position.set(1.15, 1.45, -D / 2 + 0.29);
+winNight.material.depthWrite = false;
 room.add(winDay); room.add(winNight);
-const wf = rb(1.32, 1.02, 0.06, 0.03, mats.cream); wf.position.set(1.15, 1.45, -D / 2 + 0.16); room.add(wf);
-const mull = rb(0.05, 0.9, 0.03, 0.01, mats.cream); mull.position.set(1.15, 1.45, -D / 2 + 0.21); room.add(mull);
-const mull2 = rb(1.2, 0.05, 0.03, 0.01, mats.cream); mull2.position.set(1.15, 1.45, -D / 2 + 0.21); room.add(mull2);
+const wf = rb(1.32, 1.02, 0.06, 0.03, mats.cream); wf.position.set(1.15, 1.45, -D / 2 + 0.19); room.add(wf);
+const mull = rb(0.05, 0.84, 0.03, 0.01, mats.cream); mull.position.set(1.15, 1.45, -D / 2 + 0.27); room.add(mull);
+const mull2 = rb(1.12, 0.05, 0.03, 0.01, mats.cream); mull2.position.set(1.15, 1.45, -D / 2 + 0.27); room.add(mull2);
 // menu board on the back wall
 const menuT = tex(400, 300, (x, w, h) => { x.fillStyle = '#101a14'; x.fillRect(0, 0, w, h); x.fillStyle = '#f4d96c'; x.font = '800 60px J'; x.textAlign = 'center'; x.fillText('MENU', w / 2, 70);
   x.fillStyle = '#f2f3ef'; for (let i = 0; i < 4; i++) { x.fillRect(50, 110 + i * 44, 200 - (i % 2) * 60, 12); x.fillRect(300, 110 + i * 44, 50, 12); } });
 const menuMat = new THREE.MeshStandardMaterial({ map: menuT, emissive: 0xffffff, emissiveMap: menuT, emissiveIntensity: 0.15 });
-const menu = plane(1.2, 0.9, menuMat); menu.position.set(-0.75, 1.65, -D / 2 + 0.19); room.add(menu);
-const mf = rb(1.3, 1.0, 0.05, 0.03, mats.gold); mf.position.set(-0.75, 1.65, -D / 2 + 0.16); room.add(mf);
+const menu = plane(1.2, 0.9, menuMat); menu.position.set(-0.75, 1.65, -D / 2 + 0.24); room.add(menu);
+const mf = rb(1.3, 1.0, 0.05, 0.03, mats.gold); mf.position.set(-0.75, 1.65, -D / 2 + 0.19); room.add(mf);
 
 // counter with espresso machine
 const counter = rb(2.6, 0.95, 0.8, 0.06, mats.cream); counter.position.set(-0.6, 0.55, -0.75); room.add(counter);
@@ -111,7 +112,7 @@ window.render3d = function (t) {
   const on = back(t / 0.45);
   const night = cl((t - DM + 0.1) / 0.3) * (1 - cl((t - BOOK + 0.2) / 0.3));
   key.intensity = keyBase * (0.25 + 0.75 * on) * (1 - 0.65 * night); amb.intensity = ambBase * (1 - 0.5 * night);
-  winNight.material.opacity = night;
+  winNight.material.opacity = night; winNight.visible = night > 0.01;
   owner.position.y = 0.1 + Math.abs(Math.sin(t * 3.2)) * 0.04; owner.rotation.y = Math.sin(t * 0.8) * 0.4;
   room.rotation.y = -0.6 + Math.sin(t * 0.3) * 0.18;
   room.updateMatrixWorld();

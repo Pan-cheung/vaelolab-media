@@ -12,7 +12,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 export const scene = new THREE.Scene();
 scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-export const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+export const camera = new THREE.PerspectiveCamera(30, W / H, 1, 60);
 
 export const key = new THREE.DirectionalLight(0xfff4dc, 2.2); key.position.set(4, 9, 6); key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048); key.shadow.radius = 8; key.shadow.bias = -0.0004;
