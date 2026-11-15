@@ -1,0 +1,41 @@
+{
+ "slug": "receipts-shoebox",
+ "mp3": "vo-receipts-shoebox.mp3",
+ "words": "vo-receipts-shoebox.words.json",
+ "text": "Still keeping receipts in a shoebox? Snap a photo the day you get one. Many accounting apps read the store, the date, the total and the tax for you. At tax time, it's already sorted. Send this to the friend with a shoebox full of receipts.",
+ "out": "/home/claude/reel/reel-receipts-shoebox.mp4",
+ "scene_js": "scene_receipts.js",
+ "hook": "Receipts still in a *shoebox?*",
+ "cta_at": "Send this",
+ "cta": "Send this to the friend with a *shoebox of receipts*",
+ "beats": [
+  {
+   "n": 1,
+   "q": "Snap it the <b>same day</b>",
+   "t0": "@Snap a"
+  },
+  {
+   "n": 2,
+   "q": "The app reads it",
+   "a": "Store \u00b7 Date \u00b7 Total \u00b7 Tax",
+   "t0": "@Many accounting",
+   "ta": "@the store"
+  },
+  {
+   "n": 3,
+   "q": "Tax time: <b>sorted</b>",
+   "t0": "@At tax"
+  }
+ ],
+ "scene": {
+  "snap": "@Snap a",
+  "read": "@Many accounting",
+  "taxtime": "@At tax"
+ },
+ "sfx": [
+  [
+   "whoosh",
+   0.05
+  ]
+ ]
+}

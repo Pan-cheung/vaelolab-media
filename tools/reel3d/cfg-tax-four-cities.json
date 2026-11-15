@@ -1,0 +1,51 @@
+{
+ "slug": "tax-four-cities",
+ "mp3": "vo-tax-four-cities.mp3",
+ "words": "vo-tax-four-cities.words.json",
+ "text": "Same hundred dollar order. Four different tax bills. Ship it from Ontario to Calgary, and you charge five dollars. Toronto, thirteen. Halifax, fourteen. Moncton, fifteen. For goods you deliver, the rate follows where the order goes, not where your shop is. Send this to the friend who just started shipping across Canada.",
+ "out": "/home/claude/reel/reel-tax-four-cities.mp4",
+ "scene_js": "scene_tax.js",
+ "hook": "$100 order. *4 tax bills.*",
+ "cta_at": "Send this",
+ "cta": "Send this to the friend who just started *shipping across Canada*",
+ "beats": [
+  {
+   "q": "From Ontario to",
+   "t0": "@Ship it"
+  },
+  {
+   "q": "Tax follows <b>the order</b>",
+   "a": "not your shop",
+   "t0": "@For goods",
+   "ta": "@not where"
+  }
+ ],
+ "scene": {
+  "ship": "@Ship it",
+  "cities": [
+   "@Calgary",
+   "@Toronto",
+   "@Halifax",
+   "@Moncton"
+  ],
+  "rule": "@For goods"
+ },
+ "sfx": [
+  [
+   "thud",
+   "@Calgary"
+  ],
+  [
+   "thud",
+   "@Toronto"
+  ],
+  [
+   "thud",
+   "@Halifax"
+  ],
+  [
+   "thud",
+   "@Moncton"
+  ]
+ ]
+}

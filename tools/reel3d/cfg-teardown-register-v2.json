@@ -1,0 +1,90 @@
+{
+ "slug": "teardown-register-v2",
+ "mp3": "vo-teardown-register-v2.mp3",
+ "words": "vo-teardown-register-v2.words.json",
+ "text": "Five jobs are hiding inside your cash register. Receipts? An app logs them. Customer emails? AI drafts the reply. Your menu sign? Made in seconds. The weekly sales report? It writes itself. And sales tax? There's a free calculator for that. Send this to the shop owner still doing all five by hand.",
+ "out": "/home/claude/reel/reel-teardown-register-v2.mp4",
+ "scene_js": "scene_register.js",
+ "hook": "*5 jobs* hiding in your register",
+ "cta_at": "Send this",
+ "cta": "Send this to the shop owner doing *all 5 by hand*",
+ "beats": [
+  {
+   "n": 1,
+   "q": "Receipts?",
+   "a": "An app logs them",
+   "t0": "@Receipts",
+   "ta": "@An app"
+  },
+  {
+   "n": 2,
+   "q": "Customer emails?",
+   "a": "AI drafts the reply",
+   "t0": "@Customer emails",
+   "ta": "@AI drafts"
+  },
+  {
+   "n": 3,
+   "q": "Menu sign?",
+   "a": "Made in seconds",
+   "t0": "@Your menu",
+   "ta": "@Made in"
+  },
+  {
+   "n": 4,
+   "q": "Weekly sales report?",
+   "a": "Writes itself",
+   "t0": "@The weekly",
+   "ta": "@It writes"
+  },
+  {
+   "n": 5,
+   "q": "Sales tax?",
+   "a": "Free calculator",
+   "t0": "@And sales",
+   "ta": "@There's a"
+  }
+ ],
+ "scene": {
+  "focus": [
+   [
+    "receipts",
+    "@Receipts",
+    "@Customer emails"
+   ],
+   [
+    "emails",
+    "@Customer emails",
+    "@Your menu"
+   ],
+   [
+    "menu",
+    "@Your menu",
+    "@The weekly"
+   ],
+   [
+    "report",
+    "@The weekly",
+    "@And sales"
+   ],
+   [
+    "tax",
+    "@And sales",
+    "@Send this"
+   ]
+  ],
+  "assemble": 0.55,
+  "burst": 0.95,
+  "finale": "@Send this"
+ },
+ "sfx": [
+  [
+   "thud",
+   0.5
+  ],
+  [
+   "whoosh",
+   0.85
+  ]
+ ]
+}

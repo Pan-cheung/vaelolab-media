@@ -1,0 +1,57 @@
+{
+ "slug": "one-person-cafe-ep1",
+ "mp3": "vo-one-person-cafe-ep1.mp3",
+ "words": "vo-one-person-cafe-ep1.words.json",
+ "text": "One owner. Zero staff. Picture a caf\u00e9 run like this. A chatbot answers the DMs at midnight. Online booking fills the tables. An AI photo tool shoots the new menu. And every review gets a reply before lunch. Next episode, the flower shop. Send this to the caf\u00e9 owner who does everything alone.",
+ "out": "/home/claude/reel/reel-one-person-cafe-ep1.mp4",
+ "scene_js": "scene_cafe.js",
+ "hook": "1 owner. *0 staff.*",
+ "cta_at": "Send this",
+ "hook_size": 140,
+ "cta": "Send this to the caf\u00e9 owner who does <b>everything alone</b>",
+ "beats": [
+  {
+   "q": "Ep. 1 \u00b7 <b>The caf\u00e9</b>",
+   "t0": "@Picture a"
+  },
+  {
+   "n": 1,
+   "q": "DMs at midnight",
+   "a": "A chatbot answers",
+   "t0": "@A chatbot",
+   "ta": "@answers"
+  },
+  {
+   "n": 2,
+   "q": "Tables",
+   "a": "Online booking fills them",
+   "t0": "@Online booking",
+   "ta": "@fills"
+  },
+  {
+   "n": 3,
+   "q": "New menu photos",
+   "a": "An AI photo tool",
+   "t0": "@An AI photo",
+   "ta": "@shoots"
+  },
+  {
+   "n": 4,
+   "q": "Every review",
+   "a": "Reply before lunch",
+   "t0": "@And every",
+   "ta": "@gets a"
+  },
+  {
+   "q": "Next: <b>the flower shop</b>",
+   "t0": "@Next episode"
+  }
+ ],
+ "scene": {
+  "dm": "@A chatbot",
+  "book": "@Online booking",
+  "photo": "@An AI photo",
+  "review": "@And every",
+  "next": "@Next episode"
+ }
+}

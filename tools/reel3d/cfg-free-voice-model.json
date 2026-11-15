@@ -1,0 +1,49 @@
+{
+ "slug": "free-voice-model",
+ "mp3": "vo-free-voice-model.mp3",
+ "words": "vo-free-voice-model.words.json",
+ "text": "This voice model is free, and it runs in your browser. It's called Zonos 3 Mini, from Zyphra. It speaks 43 languages, and it can copy a voice from a ten second clip. The license allows commercial use. Just clone your own voice, or one you have permission to use. Send this to the friend paying for voiceovers every month.",
+ "out": "/home/claude/reel/reel-free-voice-model.mp4",
+ "scene_js": "scene_voice.js",
+ "hook": "Free voice AI. *43 languages.*",
+ "cta_at": "Send this",
+ "cta": "Send this to the friend <b>paying for voiceovers</b> every month",
+ "beats": [
+  {
+   "q": "Zonos 3 Mini",
+   "a": "by Zyphra",
+   "t0": "@It's called",
+   "ta": "@from Zyphra"
+  },
+  {
+   "n": "43",
+   "q": "languages",
+   "t0": "@It speaks"
+  },
+  {
+   "q": "Voice clone from a",
+   "a": "10 second clip",
+   "t0": "@and it can",
+   "ta": "@ten second"
+  },
+  {
+   "q": "Commercial use",
+   "a": "allowed",
+   "t0": "@The license",
+   "ta": "@allows"
+  },
+  {
+   "q": "Clone <b>your own</b> voice",
+   "a": "or one you have permission for",
+   "t0": "@Just clone",
+   "ta": "@or one"
+  }
+ ],
+ "scene": {
+  "browser": 0.0,
+  "langs": "@43 languages",
+  "clip": "@and it can",
+  "license": "@The license"
+ },
+ "css": "#num{width:150px;border-radius:60px;font-size:64px}"
+}
