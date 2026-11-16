@@ -1,0 +1,177 @@
+{
+ "slug": "receipts-story",
+ "mp3": "/home/claude/reel/vo-receipts-long.mp3",
+ "words": "/home/claude/reel/vo-receipts-long.words.json",
+ "text": "Still keeping receipts in a shoebox? Here's a better routine, in four steps. Step one. Snap a photo the day you get the receipt, before the print fades. Thermal paper doesn't last. Step two. Let the app read it. Many accounting apps pull out the store, the date, the total and the tax for you. Step three. Pick a category once, like supplies or fuel, and many apps remember it for next time. Step four. Keep the digital copy. In Canada, the CRA generally expects you to keep records for six years, and a clear electronic image can count. At tax time, everything's already sorted. Send this to the friend with a shoebox full of receipts.",
+ "out": "/home/claude/reel/reel-receipts-story.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_story.js",
+ "hook": "Shoebox of receipts? *Fix it in 4 steps.*",
+ "cta": "Send this to the friend with a <b>shoebox full of receipts</b>",
+ "beats": [
+  {
+   "q": "4 step routine",
+   "t0": "@Here's"
+  },
+  {
+   "q": "<b>1</b> Snap it",
+   "t0": "@Step one",
+   "a": "same day",
+   "ta": "@the day"
+  },
+  {
+   "q": "Thermal paper fades",
+   "t0": "@Thermal"
+  },
+  {
+   "q": "<b>2</b> Let the app read it",
+   "t0": "@Step two",
+   "a": "store, date, total, tax",
+   "ta": "@Many"
+  },
+  {
+   "q": "<b>3</b> Pick a category",
+   "t0": "@Step three",
+   "a": "once",
+   "ta": "@and many"
+  },
+  {
+   "q": "<b>4</b> Keep the digital copy",
+   "t0": "@Step four",
+   "a": "CRA: 6 years",
+   "ta": "@six years"
+  },
+  {
+   "q": "Tax time",
+   "t0": "@At tax",
+   "a": "already sorted",
+   "ta": "@already"
+  }
+ ],
+ "scene": {
+  "scenes": [
+   {
+    "at": 0.0,
+    "type": "shoebox",
+    "text": "RECEIPTS"
+   },
+   {
+    "at": "@Here's",
+    "type": "checklist",
+    "title": "Routine",
+    "rows": [
+     {
+      "text": "Snap",
+      "at": "@in four"
+     },
+     {
+      "text": "Scan",
+      "at": "@four steps"
+     },
+     {
+      "text": "Sort",
+      "at": 3.7
+     },
+     {
+      "text": "Store",
+      "at": 3.95
+     }
+    ]
+   },
+   {
+    "at": "@Step one",
+    "type": "phonecam",
+    "text": "SNAP",
+    "snapAt": "@Snap"
+   },
+   {
+    "at": "@Thermal",
+    "type": "warning",
+    "chips": [
+     {
+      "text": "Fades",
+      "at": "@doesn't"
+     }
+    ]
+   },
+   {
+    "at": "@Step two",
+    "type": "bubble",
+    "text": "Reading..."
+   },
+   {
+    "at": "@Many",
+    "type": "checklist",
+    "title": "Scanned",
+    "rows": [
+     {
+      "text": "Store",
+      "at": "@store"
+     },
+     {
+      "text": "Date",
+      "at": "@date"
+     },
+     {
+      "text": "Total",
+      "at": "@total"
+     },
+     {
+      "text": "Tax",
+      "at": "@tax"
+     }
+    ]
+   },
+   {
+    "at": "@Step three",
+    "type": "checkout",
+    "title": "Category",
+    "rows": [
+     "Supplies",
+     "Fuel"
+    ]
+   },
+   {
+    "at": "@Step four",
+    "type": "calendar",
+    "month": "SAVED",
+    "day": "\u2713"
+   },
+   {
+    "at": "@In Canada",
+    "type": "globe",
+    "pins": [
+     {
+      "lat": 56,
+      "lon": -100,
+      "text": "CRA"
+     }
+    ]
+   },
+   {
+    "at": "@six years",
+    "type": "bignumber",
+    "big": "6 yrs",
+    "label": "keep records"
+   },
+   {
+    "at": "@At tax",
+    "type": "battery",
+    "big": "100%",
+    "small": "SORTED",
+    "count": 6
+   },
+   {
+    "at": "@Send this",
+    "type": "send",
+    "text": "Receipts?"
+   }
+  ]
+ },
+ "sfx": [
+  [
+   "chime",
+   "@Snap"
+  ]
+ ]
+}

@@ -51,6 +51,15 @@ APPROVED NEWS STYLE (Pan, Nov 16 2026): scene_story.js, one 3D scene per voiceov
     shop        sign, question      shopfront with camera and hanging sign (what it means for a small business)
     send        img                 paper plane loops a phone showing a photo (the final send line)
     bignumber   big, label          3D number on a slab with bursting cubes (any key figure)
+    coins       items[{label,n,tag,at}]   pedestals with coin stacks that grow as each label is spoken
+    checkout    title, rows[]       settings card, first row toggles ON (the right setting)
+    shoebox     text                cardboard box with receipts bursting out
+    phonecam    img?, text, snapAt  phone camera snaps a photo or receipt, flash on snapAt
+    checklist   title, rows[{text,at}]  card whose rows tick at the spoken words
+    cafe        sign, tag           small cafe diorama with the owner behind the counter
+  warning also takes chips[{text,at}]; bubble and send work without img (send takes text).
+  Anchors use the FIRST occurrence of a phrase, so pick phrases that are unique in the script.
+  Use 2+ CPU friendly renders one at a time; four in parallel on 2 cores is roughly 4x slower.
   Real photos: 2 to 5 official images from the company's own page or press kit (og:image plus in article images).
   Download them through vaelolab-media: incoming/<name>.json {"url": "<exact image url>", "path": "social/YYYY-MM/img-<slug>-<n>.jpg"} (any image format is fine),
   then shrink copies to /tmp/img/<slug>-<n>.jpg with PIL (thumbnail 1600) and use those paths. Never use photos of public figures.

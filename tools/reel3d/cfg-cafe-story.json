@@ -1,0 +1,167 @@
+{
+ "slug": "cafe-story",
+ "mp3": "/home/claude/reel/vo-cafe-long.mp3",
+ "words": "/home/claude/reel/vo-cafe-long.words.json",
+ "text": "One owner. Zero staff. Picture a caf\u00e9 run like this. Here's how she keeps up. At midnight, a chatbot answers the DMs. Opening hours, the oat milk question, whether dogs are allowed. In the morning, online booking has already filled the tables, and reminder texts help cut the no shows. At noon, an AI photo tool turns one phone shot of the new pastry into a clean menu photo. After lunch, every review gets a reply, drafted in her voice and checked before it posts. And on Sunday, a scheduling tool queues the whole week of posts in one sitting. That's episode one. Next episode, the flower shop. Send this to the caf\u00e9 owner who does everything alone.",
+ "out": "/home/claude/reel/reel-cafe-story.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_story.js",
+ "hook": "One owner. *Zero staff.*",
+ "cta": "Send this to the caf\u00e9 owner who <b>does everything alone</b>",
+ "beats": [
+  {
+   "q": "Caf\u00e9, run solo",
+   "t0": "@Picture"
+  },
+  {
+   "q": "12am",
+   "t0": "@At midnight",
+   "a": "chatbot answers DMs",
+   "ta": "@a chatbot"
+  },
+  {
+   "q": "Morning",
+   "t0": "@In the",
+   "a": "online booking",
+   "ta": "@online"
+  },
+  {
+   "q": "Reminder texts",
+   "t0": "@and reminder",
+   "a": "fewer no shows",
+   "ta": "@cut"
+  },
+  {
+   "q": "Noon",
+   "t0": "@At noon",
+   "a": "phone shot to menu photo",
+   "ta": "@turns"
+  },
+  {
+   "q": "After lunch",
+   "t0": "@After",
+   "a": "review replies, checked",
+   "ta": "@and checked"
+  },
+  {
+   "q": "Sunday",
+   "t0": "@And on",
+   "a": "whole week queued",
+   "ta": "@queues"
+  },
+  {
+   "q": "Episode 2",
+   "t0": "@Next episode",
+   "a": "the flower shop",
+   "ta": "@the flower"
+  }
+ ],
+ "scene": {
+  "scenes": [
+   {
+    "at": 0.0,
+    "type": "bignumber",
+    "big": "1",
+    "label": "owner, 0 staff"
+   },
+   {
+    "at": "@Picture",
+    "type": "product",
+    "img": "/home/claude/reel/img/video-ads-for-restaurants-cafes-toronto-1.jpg"
+   },
+   {
+    "at": "@Here's",
+    "type": "cafe",
+    "sign": "CAFE",
+    "tag": "Solo"
+   },
+   {
+    "at": "@At midnight",
+    "type": "bubble",
+    "text": "Open tomorrow?"
+   },
+   {
+    "at": "@Opening",
+    "type": "checklist",
+    "title": "Answered",
+    "rows": [
+     {
+      "text": "Hours",
+      "at": "@hours"
+     },
+     {
+      "text": "Oat milk",
+      "at": "@oat"
+     },
+     {
+      "text": "Dogs",
+      "at": "@dogs"
+     }
+    ]
+   },
+   {
+    "at": "@In the",
+    "type": "calendar",
+    "month": "BOOKED",
+    "day": "\u2713"
+   },
+   {
+    "at": "@and reminder",
+    "type": "send",
+    "text": "See you!"
+   },
+   {
+    "at": "@At noon",
+    "type": "phonecam",
+    "img": "/home/claude/reel/img/video-ads-for-restaurants-cafes-toronto-2.jpg",
+    "text": "MENU",
+    "snapAt": "@one phone"
+   },
+   {
+    "at": "@After",
+    "type": "bubble",
+    "text": "Thanks for visiting!"
+   },
+   {
+    "at": "@And on",
+    "type": "checklist",
+    "title": "This week",
+    "rows": [
+     {
+      "text": "Mon",
+      "at": "@scheduling"
+     },
+     {
+      "text": "Wed",
+      "at": "@queues"
+     },
+     {
+      "text": "Fri",
+      "at": "@whole"
+     },
+     {
+      "text": "Sun",
+      "at": "@sitting"
+     }
+    ]
+   },
+   {
+    "at": "@That's",
+    "type": "shop",
+    "sign": "FLOWERS",
+    "question": "Ep. 2"
+   },
+   {
+    "at": "@Send this",
+    "type": "send",
+    "text": "Caf\u00e9?"
+   }
+  ]
+ },
+ "sfx": [
+  [
+   "chime",
+   "@one phone"
+  ]
+ ]
+}

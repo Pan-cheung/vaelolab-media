@@ -1,0 +1,187 @@
+{
+ "slug": "tax-story",
+ "mp3": "/home/claude/reel/vo-tax-long.mp3",
+ "words": "/home/claude/reel/vo-tax-long.words.json",
+ "text": "Same hundred dollar order. Four different tax bills. Say your shop is in Ontario, and you ship a hundred dollar order across Canada. To Calgary, you charge five dollars, because Alberta only has the five percent GST. Toronto, thirteen dollars of HST. Halifax, fourteen, since Nova Scotia cut its rate in April 2025. Moncton, fifteen. The same box costs your customer up to ten dollars more, depending on where it lands. For goods you deliver, the rate follows where the order goes, not where your shop is. So set your checkout to charge tax by shipping address, not by store location. And if you ship to British Columbia, Saskatchewan, Manitoba or Quebec, provincial sales tax can apply too, so check those rules first. Send this to the friend who just started shipping across Canada.",
+ "out": "/home/claude/reel/reel-tax-story.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_story.js",
+ "hook": "$100 order. *4 tax bills.*",
+ "cta": "Send this to the friend who just started <b>shipping across Canada</b>",
+ "beats": [
+  {
+   "q": "Same order, <b>4 bills</b>",
+   "t0": "@Four different"
+  },
+  {
+   "q": "From Ontario to",
+   "t0": "@Say your shop"
+  },
+  {
+   "q": "GST or HST",
+   "a": "by destination",
+   "t0": "@To Calgary",
+   "ta": "@because Alberta"
+  },
+  {
+   "q": "Up to <b>$10</b> more",
+   "a": "for the same box",
+   "t0": "@The same box",
+   "ta": "@depending"
+  },
+  {
+   "q": "Tax follows <b>the order</b>",
+   "a": "not your shop",
+   "t0": "@For goods",
+   "ta": "@not where"
+  },
+  {
+   "q": "Checkout setting",
+   "a": "tax by shipping address",
+   "t0": "@So set",
+   "ta": "@by shipping"
+  },
+  {
+   "q": "BC \u00b7 SK \u00b7 MB \u00b7 QC",
+   "a": "check PST rules",
+   "t0": "@And if you",
+   "ta": "@provincial sales"
+  }
+ ],
+ "scene": {
+  "scenes": [
+   {
+    "at": 0.0,
+    "type": "bignumber",
+    "big": "$100",
+    "label": "one order"
+   },
+   {
+    "at": "@Four different",
+    "type": "globe",
+    "pins": [
+     {
+      "lat": 51,
+      "lon": -114,
+      "text": "5%"
+     },
+     {
+      "lat": 45,
+      "lon": -64,
+      "text": "15%"
+     }
+    ]
+   },
+   {
+    "at": "@Say your shop",
+    "type": "map"
+   },
+   {
+    "at": "@To Calgary",
+    "type": "coins",
+    "items": [
+     {
+      "label": "Calgary",
+      "n": 5,
+      "tag": "$5",
+      "at": "@Calgary"
+     },
+     {
+      "label": "Toronto",
+      "n": 13,
+      "tag": "$13",
+      "at": "@Toronto"
+     },
+     {
+      "label": "Halifax",
+      "n": 14,
+      "tag": "$14",
+      "at": "@Halifax"
+     },
+     {
+      "label": "Moncton",
+      "n": 15,
+      "tag": "$15",
+      "at": "@Moncton"
+     }
+    ]
+   },
+   {
+    "at": "@The same box",
+    "type": "bignumber",
+    "big": "+$10",
+    "label": "same box"
+   },
+   {
+    "at": "@For goods",
+    "type": "globe",
+    "pins": [
+     {
+      "lat": 43.7,
+      "lon": -79.4,
+      "text": "Ships from"
+     },
+     {
+      "lat": 49,
+      "lon": -123,
+      "text": "Taxed here"
+     }
+    ]
+   },
+   {
+    "at": "@So set",
+    "type": "checkout",
+    "title": "Checkout",
+    "rows": [
+     "By shipping address",
+     "By store location"
+    ]
+   },
+   {
+    "at": "@And if you",
+    "type": "warning",
+    "chips": [
+     {
+      "text": "BC",
+      "at": "@British"
+     },
+     {
+      "text": "SK",
+      "at": "@Saskatchewan"
+     },
+     {
+      "text": "MB",
+      "at": "@Manitoba"
+     },
+     {
+      "text": "QC",
+      "at": "@Quebec"
+     }
+    ]
+   },
+   {
+    "at": "@Send this",
+    "type": "send",
+    "text": "Shipping?"
+   }
+  ]
+ },
+ "sfx": [
+  [
+   "thud",
+   "@Calgary"
+  ],
+  [
+   "thud",
+   "@Toronto"
+  ],
+  [
+   "thud",
+   "@Halifax"
+  ],
+  [
+   "thud",
+   "@Moncton"
+  ]
+ ]
+}

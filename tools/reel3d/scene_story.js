@@ -65,7 +65,7 @@ T.product = p => {   // product photo standing on a turntable with a sweeping go
 };
 T.bubble = p => {   // speech bubble with the wake word, sound rings, product photo behind
   const g = new THREE.Group();
-  const c = card(p.img, 2.0, 1.12); c.position.set(-0.55, -0.15, -0.4); c.rotation.y = 0.25; g.add(c);
+  const c = p.img ? card(p.img, 2.0, 1.12) : rb(1.2, 1.2, 0.2, 0.3, mats.green); c.position.set(-0.55, -0.15, -0.4); c.rotation.y = 0.25; g.add(c);
   const b = new THREE.Group(); b.position.set(0.55, 0.95, 0.6); g.add(b);
   b.add(rb(1.9, 0.75, 0.22, 0.2, mats.cream));
   const tail = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.35, 16), mats.cream); tail.position.set(-0.55, -0.45, 0); tail.rotation.z = 0.5; b.add(tail);
@@ -152,7 +152,8 @@ T.warning = p => {   // spinning gold warning sign
   const tri = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.18, bevelEnabled: true, bevelSize: 0.06, bevelThickness: 0.05, bevelSegments: 3 }), mats.gold); tri.castShadow = true;
   const s = new THREE.Group(); s.position.set(0, 0.4, 0); g.add(s); s.add(tri);
   const ex = label('!', { w: 0.7, h: 1.1, bg: null, size: 280 }); ex.position.set(0, -0.05, 0.26); s.add(ex);
-  return { g, update(t, L) { s.rotation.y = lerp(Math.PI * 2, 0, eio(cl(L / 0.7))) + Math.sin(t * 2) * 0.08; s.scale.setScalar(back(L / 0.5)); } };
+  const chips = (p.chips || []).map((c, i) => { const m = label(c.text, { w: 0.85, h: 0.38, size: 100, bg: i % 2 ? '#f2f3ef' : '#f4d96c' }); g.add(m); return { m, at: c.at, i }; });
+  return { g, update(t, L) { s.rotation.y = lerp(Math.PI * 2, 0, eio(cl(L / 0.7))) + Math.sin(t * 2) * 0.08; s.scale.setScalar(back(L / 0.5)); chips.forEach(c => { const a = c.i / Math.max(1, chips.length) * Math.PI * 2 + t * 0.6; c.m.position.set(Math.cos(a) * 1.35, 0.4 + Math.sin(a) * 1.0, 0.8); face(c.m); c.m.scale.setScalar(Math.max(0.001, back((t - c.at) / 0.35))); }); } };
 };
 T.globe = p => {   // dotted globe turning, pins rising at given lat/lon with labels
   const g = new THREE.Group();
@@ -172,7 +173,7 @@ T.globe = p => {   // dotted globe turning, pins rising at given lat/lon with la
   return { g, update(t, L) {
     const spin = lerp(lon0 * Math.PI / 180 + 0.6, (p.pins.length > 1 ? -(p.pins[0].lon + p.pins[1].lon) / 2 : lon0) * Math.PI / 180, eio(cl(L / 2.4)));
     gl.rotation.set(0.35, spin, 0);
-    pins.forEach((o, i) => { const k = back((L - 0.4 - i * 0.6) / 0.35); o.pin.scale.setScalar(Math.max(0.001, k)); const w = o.pin.getWorldPosition(new THREE.Vector3()); g.worldToLocal(w); o.lb.position.set(w.x * 1.1, w.y + 0.42, w.z + 0.5); face(o.lb); o.lb.scale.setScalar(Math.max(0.001, k)); });
+    pins.forEach((o, i) => { const k = back((L - 0.4 - i * 0.6) / 0.35); o.pin.scale.setScalar(Math.max(0.001, k)); const w = o.pin.getWorldPosition(new THREE.Vector3()); g.worldToLocal(w); o.lb.position.set(w.x * 1.1 + (i % 2 ? 0.4 : -0.4), w.y + 0.42 + (i % 2 ? -0.25 : 0.2), w.z + 0.5); face(o.lb); o.lb.scale.setScalar(Math.max(0.001, k)); });
   } };
 };
 T.shop = p => {   // little shopfront, camera on a pole, a sign swinging
@@ -196,6 +197,7 @@ T.send = p => {   // paper plane loops around a phone showing a photo
   const ph = new THREE.Group(); ph.position.set(0, 0.3, 0); g.add(ph);
   ph.add(rb(1.15, 2.1, 0.1, 0.12, mats.ink));
   if (p.img) { const s = plane(1.03, 1.95, photo(p.img, 1.03, 1.95)); s.position.z = 0.055; ph.add(s); }
+  else { const s = label(p.text || 'Send', { w: 0.95, h: 0.5, size: 90 }); s.position.z = 0.06; ph.add(s); }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0.5, -0.32, 0, -0.3, 0, 0.03, -0.15, 0, 0, 0.5, 0, 0.03, -0.15, 0.32, 0, -0.3, 0, 0, 0.5, 0, -0.12, -0.25, 0, 0.03, -0.15], 3));
   geo.computeVertexNormals();
@@ -212,6 +214,95 @@ T.bignumber = p => {   // big value on a slab with gold cubes bursting out
   const lb = label(p.label || '', { w: 2.2, h: 0.32, bg: null, fg: '#4d5a52', size: 80 }); lb.position.set(0, -0.42, 0.12); s.add(lb);
   const bits = []; for (let i = 0; i < 16; i++) { const b = rb(0.12, 0.12, 0.12, 0.03, mats.gold); g.add(b); bits.push(b); }
   return { g, update(t, L) { s.scale.setScalar(back(L / 0.45)); s.rotation.set(Math.sin(t) * 0.05, Math.sin(t * 0.7) * 0.15, 0); bits.forEach((b, i) => { const a = i / 16 * Math.PI * 2, k = eio(cl((L - 0.2) / 0.8)); b.position.set(Math.cos(a) * (0.5 + k * 1.3), 0.35 + Math.sin(a) * (0.3 + k * 0.9), 0.3); b.rotation.set(t + i, t * 1.3, 0); b.scale.setScalar(Math.max(0.001, 1 - k * 0.6)); }); } };
+};
+
+
+T.coins = p => {   // pedestals with coin stacks that grow when each label is spoken: items [{label, n, tag, at}]
+  const g = new THREE.Group();
+  const items = p.items || [], N = items.length, gap = 2.0 / Math.max(1, N - 1);
+  const coinGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.08, 40);
+  const st = items.map((it, i) => {
+    const s = new THREE.Group(); s.position.set(-1.0 + i * gap, -0.5, (i === 0 || i === N - 1) ? -0.1 : 0.15); g.add(s);
+    s.add(rb(0.78, 0.4, 0.78, 0.08, mats.cream));
+    const lb = label(it.label, { w: 0.74, h: 0.26, bg: '#133621', fg: '#f2f3ef', size: 70, r: 20 }); lb.position.set(0, 0, 0.4); s.add(lb);
+    const coins = []; for (let k = 0; k < it.n; k++) { const c = new THREE.Mesh(coinGeo, mats.gold); c.castShadow = true; s.add(c); coins.push(c); }
+    const tag = label(it.tag, { w: 0.8, h: 0.4, size: 110, bg: '#f2f3ef' }); s.add(tag);
+    return { s, coins, tag, at: it.at, n: it.n };
+  });
+  return { g, update(t, L) { st.forEach(o => { const k = cl((t - o.at) / 0.7) * o.n; o.coins.forEach((c, j) => { const a = cl(k - j); c.visible = a > 0.01; c.position.set(Math.sin(j * 2.3) * 0.02, 0.24 + j * 0.085 + (1 - back(a)) * 0.9, 0); c.rotation.y = j; }); o.tag.position.set(0, 0.45 + o.n * 0.085 * cl((t - o.at) / 0.7), 0.1); face(o.tag); o.tag.scale.setScalar(Math.max(0.001, back((t - o.at - 0.5) / 0.35))); }); } };
+};
+T.checkout = p => {   // checkout card: the right setting toggles on
+  const g = new THREE.Group();
+  const c = new THREE.Group(); c.position.set(0, 0.35, 0); g.add(c);
+  c.add(rb(2.8, 1.9, 0.12, 0.12, mats.cream));
+  const hd = label(p.title || 'Checkout', { w: 2.4, h: 0.4, bg: null, size: 110 }); hd.position.set(0, 0.6, 0.08); c.add(hd);
+  const rows = (p.rows || []).map((r, i) => {
+    const y = 0.05 - i * 0.55;
+    const tx = label(r, { w: 1.7, h: 0.36, bg: null, fg: '#101a14', size: 80 }); tx.position.set(-0.4, y, 0.08); c.add(tx);
+    const track = rb(0.62, 0.3, 0.06, 0.15, i === 0 ? mats.green : mats.key); track.position.set(0.95, y, 0.08); c.add(track);
+    const knob = sph(0.14, mats.gold); knob.position.set(0.95, y, 0.16); c.add(knob);
+    return { knob, track, y, on: i === 0 };
+  });
+  const cur = sph(0.07, mats.ink); g.add(cur);
+  return { g, update(t, L) { const k = eio(cl((L - 0.6) / 0.4)); rows.forEach(r => { r.knob.position.x = 0.95 + (r.on ? lerp(-0.16, 0.16, k) : lerp(0.16, -0.16, k)); }); cur.position.set(lerp(1.6, 1.0, eio(cl(L / 0.6))), lerp(-0.6, 0.4, eio(cl(L / 0.6))), 0.4); c.rotation.set(-0.08, Math.sin(t * 0.8) * 0.12, 0); } };
+};
+
+
+const rTex = tex(200, 360, (x, W, H) => { x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); x.fillStyle = '#a7aeaa'; for (let i = 0; i < 10; i++) x.fillRect(24, 30 + i * 26, i % 3 === 2 ? 90 : 150, 9); x.fillStyle = '#133621'; x.fillRect(24, 310, 90, 14); });
+const rMat = new THREE.MeshStandardMaterial({ map: rTex, side: THREE.DoubleSide, roughness: 0.85 });
+T.shoebox = p => {   // cardboard shoebox with receipts bursting out of it
+  const g = new THREE.Group();
+  const card = new THREE.MeshStandardMaterial({ color: 0xb98b5a, roughness: 0.85 });
+  const b = new THREE.Group(); b.position.set(0, -0.7, 0); b.rotation.y = 0.35; g.add(b);
+  const W = 2.0, D = 1.2, H = 0.8;
+  const bot = rb(W, 0.06, D, 0.02, card); bot.position.y = 0.03; b.add(bot);
+  [[0, H / 2, D / 2, W, H, 0.06], [0, H / 2, -D / 2, W, H, 0.06], [W / 2, H / 2, 0, 0.06, H, D], [-W / 2, H / 2, 0, 0.06, H, D]].forEach(([x, y, z, w, h, d]) => { const m = rb(w, h, d, 0.02, card); m.position.set(x, y, z); b.add(m); });
+  const lb = label(p.text || 'RECEIPTS', { w: 1.0, h: 0.3, bg: '#efe4c8', fg: '#5b4026', size: 80, r: 6 }); lb.position.set(0, H * 0.55, D / 2 + 0.04); b.add(lb);
+  const rs = []; for (let i = 0; i < 18; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.36, 0.64), rMat); m.castShadow = true; g.add(m); rs.push(m); }
+  const rnd = (i, k) => { const v = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return v - Math.floor(v); };
+  return { g, update(t, L) { rs.forEach((m, i) => { const ph = (L * 0.8 + rnd(i, 1)) % 1, a = rnd(i, 2) * 6.28, sp = 0.4 + rnd(i, 3) * 0.8; m.position.set(Math.cos(a) * sp * ph, -0.4 + 3.4 * ph - 3.2 * ph * ph, Math.sin(a) * sp * ph * 0.5 + 0.2); m.rotation.set(rnd(i, 4) * 6 + t * 2, rnd(i, 5) * 6 + t, rnd(i, 6) * 3); }); b.rotation.z = Math.sin(t * 9) * 0.02; } };
+};
+T.phonecam = p => {   // phone camera snaps a receipt (or a photo), flash on the snap
+  const g = new THREE.Group();
+  const rc = p.img ? card(p.img, 1.2, 1.2) : new THREE.Mesh(new THREE.PlaneGeometry(0.9, 1.6), rMat);
+  rc.position.set(-0.75, 0.2, -0.3); rc.rotation.set(-0.15, 0.3, 0.05); g.add(rc);
+  const ph = new THREE.Group(); ph.position.set(0.7, 0.35, 0.8); g.add(ph);
+  ph.add(rb(1.05, 2.0, 0.1, 0.12, mats.ink));
+  const scr = plane(0.95, 1.85, new THREE.MeshBasicMaterial({ color: 0x0f1f16, toneMapped: false })); scr.position.z = 0.055; ph.add(scr);
+  const vf = label(p.text || 'SNAP', { w: 0.8, h: 0.3, size: 80 }); vf.position.set(0, -0.7, 0.06); ph.add(vf);
+  const corner = []; [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(([sx, sy]) => { const c = rb(0.18, 0.04, 0.02, 0.01, mats.gold); c.position.set(sx * 0.32, sy * 0.55 + 0.1, 0.06); ph.add(c); corner.push(c); });
+  const flash = plane(1.0, 1.9, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, toneMapped: false })); flash.position.z = 0.07; ph.add(flash);
+  return { g, update(t, L) { ph.rotation.set(0, lerp(-0.6, -0.25, eio(cl(L / 0.6))), 0.05); const snap = p.snapAt ? t - p.snapAt : L - 1.0; flash.material.opacity = snap > 0 && snap < 0.3 ? 1 - snap / 0.3 : 0; corner.forEach(c => c.scale.setScalar(1 + Math.max(0, Math.sin(L * 6)) * 0.2)); rc.position.y = 0.2 + Math.sin(t * 1.5) * 0.05; } };
+};
+T.checklist = p => {   // a card whose rows tick one by one: rows [{text, at}]
+  const g = new THREE.Group();
+  const c = new THREE.Group(); c.position.set(0, 0.35, 0); g.add(c);
+  const rows = p.rows || [], H = 0.5 + rows.length * 0.42;
+  c.add(rb(2.7, H, 0.12, 0.12, mats.cream));
+  const hd = label(p.title || '', { w: 2.3, h: 0.36, bg: null, size: 100 }); hd.position.set(0, H / 2 - 0.3, 0.08); c.add(hd);
+  const rs = rows.map((r, i) => { const y = H / 2 - 0.75 - i * 0.42; const tx = label(r.text, { w: 1.8, h: 0.32, bg: null, fg: '#101a14', size: 80 }); tx.position.set(-0.3, y, 0.08); c.add(tx);
+    const box = rb(0.3, 0.3, 0.06, 0.06, mats.key); box.position.set(1.0, y, 0.08); c.add(box);
+    const tick = label('✓', { w: 0.36, h: 0.36, bg: '#f4d96c', size: 110, r: 40 }); tick.position.set(1.0, y, 0.13); c.add(tick); return { tick, at: r.at }; });
+  return { g, update(t, L) { rs.forEach(r => r.tick.scale.setScalar(Math.max(0.001, back((t - r.at) / 0.3)))); c.rotation.set(-0.06, Math.sin(t * 0.7) * 0.12, 0); } };
+};
+T.cafe = p => {   // little cafe room with an owner behind the counter
+  const g = new THREE.Group(); const room = new THREE.Group(); room.rotation.y = -0.55; room.position.y = -0.8; room.scale.setScalar(0.62); g.add(room);
+  const W = 4.4, D = 3.4, HW = 2.5;
+  room.add(rb(W, 0.25, D, 0.06, new THREE.MeshStandardMaterial({ color: 0xd9c3a0, roughness: 0.7 })));
+  const bk = rb(W, HW, 0.18, 0.04, mats.green); bk.position.set(0, HW / 2, -D / 2 + 0.09); room.add(bk);
+  const lf = rb(0.18, HW, D, 0.04, mats.cream); lf.position.set(-W / 2 + 0.09, HW / 2, 0); room.add(lf);
+  const tr = rb(W, 0.1, 0.22, 0.03, mats.gold); tr.position.set(0, HW, -D / 2 + 0.09); room.add(tr);
+  const sign = label(p.sign || 'CAFE', { w: 1.6, h: 0.5, bg: '#101a14', fg: '#f4d96c', size: 110, r: 16 }); sign.position.set(-0.6, 1.8, -D / 2 + 0.22); room.add(sign);
+  const ctr = rb(2.6, 0.95, 0.8, 0.06, mats.cream); ctr.position.set(-0.6, 0.55, -0.75); room.add(ctr);
+  const top = rb(2.7, 0.08, 0.9, 0.03, mats.wood); top.position.set(-0.6, 1.05, -0.75); room.add(top);
+  const esp = rb(0.6, 0.55, 0.45, 0.06, mats.ink); esp.position.set(-1.35, 1.36, -0.85); room.add(esp);
+  const ow = new THREE.Group(); ow.position.set(-0.4, 0.1, -1.25); room.add(ow);
+  const bd = new THREE.Mesh(new THREE.CapsuleGeometry(0.26, 0.75, 8, 24), mats.green); bd.position.y = 0.95; ow.add(bd);
+  const hd = sph(0.24, mats.skin); hd.position.y = 1.72; ow.add(hd);
+  const hair = new THREE.Mesh(new THREE.SphereGeometry(0.255, 24, 16, 0, Math.PI * 2, 0, Math.PI / 2), mats.ink); hair.position.y = 1.74; ow.add(hair);
+  [[0.6, 1.05], [1.55, 0.6]].forEach(([x, z]) => { const tb = new THREE.Group(); tb.position.set(x, 0.1, z); room.add(tb); const tp = cyl(0.42, 0.42, 0.06, mats.cream); tp.position.y = 0.72; tb.add(tp); const lg = cyl(0.05, 0.05, 0.7, mats.ink); lg.position.y = 0.37; tb.add(lg); [-0.6, 0.6].forEach(dx => { const ch = rb(0.34, 0.45, 0.34, 0.05, mats.wood); ch.position.set(dx, 0.25, 0); tb.add(ch); }); });
+  const tag = label(p.tag || '', { w: 1.3, h: 0.45, size: 100 }); tag.position.set(0.9, 1.25, 0.9); g.add(tag);
+  return { g, update(t, L) { ow.position.y = 0.1 + Math.abs(Math.sin(t * 3.2)) * 0.04; ow.rotation.y = Math.sin(t * 0.8) * 0.4; room.rotation.y = -0.55 + Math.sin(t * 0.35) * 0.15; tag.scale.setScalar(Math.max(0.001, p.tag ? back((L - 0.5) / 0.4) : 0)); } };
 };
 
 // ---------- backdrop: tinted radial glow plane + drifting bokeh ----------

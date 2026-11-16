@@ -1,0 +1,146 @@
+{
+ "slug": "voice-story",
+ "mp3": "/home/claude/reel/vo-voice-long.mp3",
+ "words": "/home/claude/reel/vo-voice-long.words.json",
+ "text": "This voice model is free, and it runs in your browser. It's called Zonos 3 Mini, from Zyphra. Here's what it can do. It speaks 43 languages. It can copy a voice from a five to ten second clip. It's small enough to run on a laptop or a phone, and a web version runs inside a browser tab, with nothing to install. The Apache 2.0 license allows commercial use, so you could voice your own product videos with it. One rule. Clone only your own voice, or one you have written permission to use. The model card doesn't cover watermarks, so how it's used is on you. Send this to the friend paying for voiceovers every month.",
+ "out": "/home/claude/reel/reel-voice-story.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_story.js",
+ "hook": "Free voice model. *Runs in your browser.*",
+ "cta": "Send this to the friend paying for <b>voiceovers every month</b>",
+ "beats": [
+  {
+   "q": "Zonos 3 Mini",
+   "t0": "@It's called",
+   "a": "by Zyphra",
+   "ta": "@from"
+  },
+  {
+   "q": "What it does",
+   "t0": "@Here's"
+  },
+  {
+   "q": "<b>43</b> languages",
+   "t0": "@It speaks"
+  },
+  {
+   "q": "Voice cloning",
+   "t0": "@It can copy",
+   "a": "5 to 10 second clip",
+   "ta": "@five"
+  },
+  {
+   "q": "Laptop, phone, browser",
+   "t0": "@It's small",
+   "a": "nothing to install",
+   "ta": "@nothing"
+  },
+  {
+   "q": "Apache 2.0",
+   "t0": "@The Apache",
+   "a": "commercial use OK",
+   "ta": "@allows"
+  },
+  {
+   "q": "One rule",
+   "t0": "@One rule",
+   "a": "your voice or written permission",
+   "ta": "@written"
+  },
+  {
+   "q": "Watermarks",
+   "t0": "@The model",
+   "a": "not covered",
+   "ta": "@doesn't cover"
+  }
+ ],
+ "scene": {
+  "scenes": [
+   {
+    "at": 0.0,
+    "type": "bignumber",
+    "big": "$0",
+    "label": "voice model"
+   },
+   {
+    "at": "@It's called",
+    "type": "product",
+    "img": "/home/claude/reel/img/news-zyphra-zonos3-mini-open-tts-1.jpg"
+   },
+   {
+    "at": "@Here's",
+    "type": "checklist",
+    "title": "Zonos 3 Mini",
+    "rows": [
+     {
+      "text": "Languages",
+      "at": "@what"
+     },
+     {
+      "text": "Cloning",
+      "at": "@it can"
+     },
+     {
+      "text": "On device",
+      "at": "@do"
+     },
+     {
+      "text": "Commercial",
+      "at": 7.0
+     }
+    ]
+   },
+   {
+    "at": "@It speaks",
+    "type": "languages",
+    "big": "43"
+   },
+   {
+    "at": "@It can copy",
+    "type": "bubble",
+    "text": "5 to 10 sec clip"
+   },
+   {
+    "at": "@It's small",
+    "type": "phonecam",
+    "text": "BROWSER",
+    "snapAt": "@inside"
+   },
+   {
+    "at": "@The Apache",
+    "type": "checkout",
+    "title": "Apache 2.0",
+    "rows": [
+     "Commercial use",
+     "Restricted"
+    ]
+   },
+   {
+    "at": "@One rule",
+    "type": "warning",
+    "chips": [
+     {
+      "text": "Your voice",
+      "at": "@only your"
+     },
+     {
+      "text": "Permission",
+      "at": "@written"
+     }
+    ]
+   },
+   {
+    "at": "@The model",
+    "type": "bignumber",
+    "big": "?",
+    "label": "watermarks"
+   },
+   {
+    "at": "@Send this",
+    "type": "send",
+    "text": "Voiceovers?"
+   }
+  ]
+ },
+ "sfx": []
+}
