@@ -2,6 +2,15 @@
 // window.CFG.scene.scenes = [{ at: <seconds>, type: '<type>', ...params }]; a scene lives until the next one starts.
 // Types: hero, product, bubble, languages, map, calendar, battery, pricecards, warning, globe, shop, send, bignumber
 import { THREE, C, scene, camera, renderer, floorAt, mats, rb, cyl, sph, tex, plane, cl, eio, back, lerp, amp } from './common.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import FONTJSON from './font_helvetiker_bold.js';
+const FONT = new FontLoader().parse(FONTJSON);
+function txt3d(text, size = 0.6, mat = mats.gold) {
+  const geo = new TextGeometry(text, { font: FONT, size, depth: size * 0.28, curveSegments: 6, bevelEnabled: true, bevelThickness: size * 0.05, bevelSize: size * 0.03, bevelSegments: 3 });
+  geo.computeBoundingBox(); geo.center();
+  const m = new THREE.Mesh(geo, mat); m.castShadow = true; return m;
+}
 
 floorAt(-1.25, 0.25);
 const LIST = C.scenes;
@@ -43,7 +52,8 @@ T.hero = p => {   // portrait photo flips in, price tag swings below
   const tag = new THREE.Group(); tag.position.set(0.72, 1.1, 0.4); g.add(tag);
   const str = cyl(0.01, 0.01, 0.5, mats.ink); str.position.y = -0.25; tag.add(str);
   const t1 = label(p.tag || '', { w: 1.25, h: 0.6, size: 150 }); t1.position.y = -0.8; tag.add(t1);
-  return { g, update(t, L) { c.rotation.set(0, lerp(-0.5, 0.18, back((L + 0.15) / 0.6)) + Math.sin(t * 0.8) * 0.05, 0); tag.rotation.z = Math.sin(t * 2.4) * 0.18 * Math.exp(-L * 0.4) + Math.sin(t * 1.3) * 0.04; tag.scale.setScalar(Math.max(0.001, back((L + 0.2) / 0.4))); } };
+  const big = txt3d((p.tag || '').replace('US', ''), 0.42); big.position.set(0.25, -0.35, 1.0); g.add(big);
+  return { g, update(t, L) { c.rotation.set(0, lerp(-0.5, 0.18, back((L + 0.15) / 0.6)) + Math.sin(t * 0.8) * 0.05, 0); tag.rotation.z = Math.sin(t * 2.4) * 0.18 * Math.exp(-L * 0.4) + Math.sin(t * 1.3) * 0.04; tag.scale.setScalar(Math.max(0.001, back((L + 0.2) / 0.4))); big.rotation.y = Math.sin(t * 1.5) * 0.5; big.position.y = -0.35 + Math.sin(t * 2) * 0.06; big.scale.setScalar(Math.max(0.001, back((L - 0.8) / 0.4))); } };
 };
 T.product = p => {   // product photo standing on a turntable with a sweeping gold ring
   const g = new THREE.Group();
@@ -71,8 +81,8 @@ T.languages = p => {   // two bubbles swapping greetings around a dotted globe, 
   const core = sph(0.8, mats.deep); core.position.copy(dots.position); g.add(core);
   const mk = (x, y) => { const s = new THREE.Group(); s.position.set(x, y, 0.8); g.add(s); s.add(rb(1.35, 0.55, 0.16, 0.18, mats.cream)); const ls = words.map(w => { const l = label(w, { w: 1.25, h: 0.5, bg: null, size: 95 }); l.position.z = 0.09; s.add(l); return l; }); return { s, ls }; };
   const A = mk(-0.7, 1.2), B = mk(0.7, -0.3);
-  const n = label(p.big || '', { w: 1.1, h: 0.5, size: 140 }); n.position.set(-0.75, -0.45, 1.0); g.add(n);
-  return { g, update(t, L) { dots.rotation.y = t * 0.6; const i = Math.floor(L / 0.55); A.ls.forEach((l, j) => l.visible = j === i % words.length); B.ls.forEach((l, j) => l.visible = j === (i + 3) % words.length); A.s.scale.setScalar(back((L - 0.1) / 0.35)); B.s.scale.setScalar(back((L - 0.3) / 0.35)); n.scale.setScalar(back((L - 0.5) / 0.4)); A.s.position.y = 1.2 + Math.sin(t * 2) * 0.05; B.s.position.y = -0.2 + Math.sin(t * 2 + 1) * 0.05; } };
+  const n = txt3d(p.big || '', 0.5); n.position.set(-0.35, -0.55, 1.1); g.add(n);
+  return { g, update(t, L) { dots.rotation.y = t * 0.6; const i = Math.floor(L / 0.55); A.ls.forEach((l, j) => l.visible = j === i % words.length); B.ls.forEach((l, j) => l.visible = j === (i + 3) % words.length); A.s.scale.setScalar(back((L - 0.1) / 0.35)); B.s.scale.setScalar(back((L - 0.3) / 0.35)); n.scale.setScalar(Math.max(0.001, back((L - 0.5) / 0.4))); n.rotation.y = Math.sin(t * 1.4) * 0.6; A.s.position.y = 1.2 + Math.sin(t * 2) * 0.05; B.s.position.y = -0.2 + Math.sin(t * 2 + 1) * 0.05; } };
 };
 T.map = p => {   // tilted street map, route draws itself, pin drops
   const g = new THREE.Group();
@@ -116,12 +126,12 @@ T.battery = p => {   // glass battery filling up, labelled, small charges poppin
   const capT = cyl(0.25, 0.25, 0.14, mats.cream); capT.position.set(-0.5, 1.37, 0); g.add(capT);
   const base = cyl(0.57, 0.57, 0.08, mats.cream); base.position.set(-0.5, -0.72, 0); g.add(base);
   const fill = cyl(0.5, 0.5, 1, mats.gold); g.add(fill);
-  const lb = label(p.big || '', { w: 1.1, h: 0.55, size: 150 }); lb.position.set(-0.5, 0.3, 0.7); g.add(lb);
+  const lb = txt3d(p.big || '', 0.5, mats.cream); lb.position.set(-0.5, 0.3, 0.8); g.add(lb);
   const box = rb(1.0, 0.6, 0.7, 0.12, mats.ink); box.position.set(1.0, -0.45, 0.2); g.add(box);
   const n = p.count || 7; const pips = [];
   for (let i = 0; i < n; i++) { const d = sph(0.09, mats.gold); g.add(d); pips.push(d); }
   const lc = label(p.small || '', { w: 1.1, h: 0.42, bg: '#f2f3ef', size: 95 }); lc.position.set(1.0, 0.25, 0.7); g.add(lc);
-  return { g, update(t, L) { const k = eio(cl((L - 0.2) / 1.2)); const h = Math.max(0.01, 1.9 * k); fill.scale.y = h; fill.position.set(-0.5, -0.68 + h / 2, 0); lb.scale.setScalar(back((L - 0.9) / 0.4));
+  return { g, update(t, L) { const k = eio(cl((L - 0.2) / 1.2)); const h = Math.max(0.01, 1.9 * k); fill.scale.y = h; fill.position.set(-0.5, -0.68 + h / 2, 0); lb.scale.setScalar(Math.max(0.001, back((L - 0.9) / 0.4))); lb.rotation.y = Math.sin(t * 1.6) * 0.5;
     pips.forEach((d, i) => { const kk = back((L - 1.0 - i * 0.18) / 0.3); const a = i / n * Math.PI * 1.2 + 0.4; d.position.set(1.0 + Math.cos(a) * 0.75, 0.0 + Math.sin(a) * 0.55 + 0.25, 0.3); d.scale.setScalar(Math.max(0.001, kk)); });
     lc.scale.setScalar(back((L - 1.0 - n * 0.18) / 0.35)); box.rotation.y = Math.sin(t) * 0.15; } };
 };
@@ -198,11 +208,25 @@ T.bignumber = p => {   // big value on a slab with gold cubes bursting out
   const g = new THREE.Group();
   const s = new THREE.Group(); s.position.set(0, 0.35, 0); g.add(s);
   s.add(rb(2.6, 1.3, 0.2, 0.12, mats.cream));
-  const v = label(p.big || '', { w: 2.4, h: 0.85, bg: null, size: 230 }); v.position.set(0, 0.12, 0.12); s.add(v);
+  const v = txt3d(p.big || '', 0.6, mats.green); v.position.set(0, 0.12, 0.25); s.add(v);
   const lb = label(p.label || '', { w: 2.2, h: 0.32, bg: null, fg: '#4d5a52', size: 80 }); lb.position.set(0, -0.42, 0.12); s.add(lb);
   const bits = []; for (let i = 0; i < 16; i++) { const b = rb(0.12, 0.12, 0.12, 0.03, mats.gold); g.add(b); bits.push(b); }
   return { g, update(t, L) { s.scale.setScalar(back(L / 0.45)); s.rotation.set(Math.sin(t) * 0.05, Math.sin(t * 0.7) * 0.15, 0); bits.forEach((b, i) => { const a = i / 16 * Math.PI * 2, k = eio(cl((L - 0.2) / 0.8)); b.position.set(Math.cos(a) * (0.5 + k * 1.3), 0.35 + Math.sin(a) * (0.3 + k * 0.9), 0.3); b.rotation.set(t + i, t * 1.3, 0); b.scale.setScalar(Math.max(0.001, 1 - k * 0.6)); }); } };
 };
+
+// ---------- backdrop: tinted radial glow plane + drifting bokeh ----------
+const glowTex = tex(512, 512, (x, W, H) => { const g = x.createRadialGradient(W / 2, H * 0.45, 10, W / 2, H / 2, W * 0.62); g.addColorStop(0, '#ffffff'); g.addColorStop(1, '#2a2a2a'); x.fillStyle = g; x.fillRect(0, 0, W, H); });
+const bgMat = new THREE.MeshBasicMaterial({ map: glowTex, toneMapped: false, color: 0x2a5c3d });
+const bg = plane(60, 60, bgMat); bg.position.z = -18; scene.add(bg);
+const PALETTE = [0x2a5c3d, 0x1b4a55, 0x23503a, 0x22395a, 0x1e5a48, 0x2c3a52];
+const dotTex = tex(64, 64, (x, W, H) => { const g = x.createRadialGradient(32, 32, 0, 32, 32, 32); g.addColorStop(0, 'rgba(255,240,190,1)'); g.addColorStop(1, 'rgba(255,240,190,0)'); x.fillStyle = g; x.fillRect(0, 0, W, H); });
+const bokeh = [];
+for (let i = 0; i < 70; i++) {
+  const r = n => { const v = Math.sin(i * 127.1 + n * 311.7) * 43758.5453; return v - Math.floor(v); };
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: dotTex, color: i % 3 ? 0xf4d96c : 0xf2f3ef, transparent: true, opacity: 0.2 + r(1) * 0.45, depthWrite: false, blending: THREE.AdditiveBlending }));
+  sp.userData = { x: (r(2) - 0.5) * 10, y: (r(3) - 0.5) * 9 + 0.5, z: -10 + r(4) * 12, s: 0.05 + r(5) * 0.35, v: 0.3 + r(6) * 0.9 };
+  scene.add(sp); bokeh.push(sp);
+}
 
 // ---------- build all scenes ----------
 const built = LIST.map((s, i) => {
@@ -212,20 +236,52 @@ const built = LIST.map((s, i) => {
 });
 if (pending === 0) window.ready3d = true;
 
+// entry styles cycle so no two scenes in a row arrive the same way
+const ENTRIES = ['right', 'drop', 'spin', 'zoom', 'flip'];
+function place(o, i, t) {
+  const L = t - o.at, kin = i === 0 ? 1 : eio(cl((L + 0.05) / 0.5)), bin = i === 0 ? 1 : back((L + 0.05) / 0.55), kout = eio(cl((t - o.end) / 0.3));
+  const e = ENTRIES[i % ENTRIES.length];
+  let x = 0, y = 0, z = 0, ry = 0, rx = 0, rz = 0, sc = 1;
+  if (e === 'right') { x = lerp(3, 0, kin); ry = lerp(-0.7, 0, kin); }
+  if (e === 'drop') { y = lerp(4, 0, bin); rz = lerp(0.3, 0, kin); }
+  if (e === 'spin') { ry = lerp(Math.PI * 1.5, 0, kin); sc = lerp(0.3, 1, bin); }
+  if (e === 'zoom') { z = lerp(-9, 0, kin); sc = lerp(0.5, 1, kin); }
+  if (e === 'flip') { rx = lerp(-Math.PI / 2, 0, bin); y = lerp(-1, 0, kin); }
+  // exits alternate between flying off left and shooting up
+  if (i % 2) { y += lerp(0, 4.5, kout); rz += lerp(0, -0.3, kout); } else { x += lerp(0, -3.5, kout); ry += lerp(0, 0.8, kout); }
+  o.g.position.set(x, y, z); o.g.rotation.set(rx, ry, rz); o.g.scale.setScalar(Math.max(0.001, sc * (1 - 0.4 * kout)));
+}
+// one camera move per scene
+const MOVES = ['push', 'orbit', 'crane', 'truck', 'dutch'];
+function camFor(i, L, dur) {
+  const u = cl(L / Math.max(1, dur)), m = MOVES[i % MOVES.length];
+  const c = { az: 0, h: 1.4, d: 11.6, x: 0, roll: 0, ly: 0.42 };
+  if (m === 'push') { c.d = lerp(12.6, 10.4, eio(u)); }
+  if (m === 'orbit') { c.az = lerp(-0.35, 0.35, eio(u)); c.d = 11.6; }
+  if (m === 'crane') { c.h = lerp(0.0, 2.6, eio(u)); c.ly = lerp(0.55, 0.35, u); }
+  if (m === 'truck') { c.x = lerp(0.7, -0.7, eio(u)); c.az = lerp(0.1, -0.1, u); }
+  if (m === 'dutch') { c.roll = lerp(0.12, -0.05, eio(u)); c.d = lerp(12.0, 10.8, u); }
+  return c;
+}
 window.render3d = function (t) {
+  let cur = 0;
+  built.forEach((o, i) => { if (t >= o.at - 0.05) cur = i; });
   built.forEach((o, i) => {
-    const L = t - o.at;
-    const on = L >= -0.05 && t < o.end + 0.3;
-    o.g.visible = on;
-    if (!on) return;
-    const kin = i === 0 ? 1 : eio(cl((L + 0.05) / 0.45)), kout = eio(cl((t - o.end) / 0.3));
-    o.g.position.set(lerp(2.2, 0, kin) + lerp(0, -2.4, kout), 0, 0);
-    o.g.rotation.y = lerp(-0.6, 0, kin) + lerp(0, 0.6, kout);
-    o.g.scale.setScalar(Math.max(0.001, lerp(0.6, 1, kin) * (1 - 0.5 * kout)));
-    o.update(t, Math.max(0, L), kin);
+    const L = t - o.at, on = L >= -0.05 && t < o.end + 0.3;
+    o.g.visible = on; if (!on) return;
+    place(o, i, t); o.update(t, Math.max(0, L));
   });
-  const a = amp(t);
-  camera.position.set(Math.sin(t * 0.25) * 0.5, 1.4, 10.8 - a * 0.15);
-  camera.lookAt(0, 0.42, 0);
+  // camera: this scene's move, blended from the previous scene's end over 0.45s, with a small kick on each cut
+  const o = built[cur], L = t - o.at, dur = Math.min(o.end, C.cta + 3) - o.at;
+  let c = camFor(cur, L, dur);
+  if (cur > 0 && L < 0.45) { const p = built[cur - 1], pc = camFor(cur - 1, o.at - p.at, o.at - p.at), k = eio(cl(L / 0.45)); for (const key in c) c[key] = lerp(pc[key], c[key], k); }
+  const kick = cur > 0 ? Math.exp(-L * 7) * Math.sin(L * 30) * 0.12 : 0;
+  camera.position.set(c.x + Math.sin(c.az) * c.d, c.h + kick, Math.cos(c.az) * c.d - amp(t) * 0.12);
+  camera.up.set(Math.sin(c.roll), Math.cos(c.roll), 0);
+  camera.lookAt(c.x * 0.6, c.ly, 0);
+  // backdrop tint per scene
+  const col = new THREE.Color(PALETTE[cur % PALETTE.length]), prev = new THREE.Color(PALETTE[Math.max(0, cur - 1) % PALETTE.length]);
+  bgMat.color.copy(prev.lerp(col, cl(L / 0.6)));
+  bokeh.forEach((b, i) => { const u = b.userData; const z = ((u.z + 10 + t * u.v) % 13) - 10; b.position.set(u.x + Math.sin(t * 0.4 + i) * 0.3, u.y + Math.sin(t * 0.6 + i * 2) * 0.2, z); b.scale.setScalar(u.s); });
   renderer.render(scene, camera);
 };
