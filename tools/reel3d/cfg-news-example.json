@@ -1,0 +1,111 @@
+{
+ "slug": "news-google-intelligent-eyewear-preorder",
+ "mp3": "/home/claude/vaelolab-media/social/2026-11/vo-news-google-intelligent-eyewear-preorder.mp3",
+ "words": "/home/claude/vaelolab-media/social/2026-11/vo-news-google-intelligent-eyewear-preorder.words.json",
+ "text": "Google's Gemini glasses are now open for pre order, and they start at three hundred ninety five US dollars. Here's what you get. Say Hey Gemini, or tap the frame, and ask about whatever you're looking at. They translate live speech in more than seventy languages. They read Google Maps directions into your ear. And they can add an event from a poster straight to your calendar. The battery lasts up to nine hours, and the case refills them up to seven times. Warby Parker frames start at three ninety five, Gentle Monster at four forty nine, and both go on sale December tenth. The catch. They only work with Google accounts from the US and South Korea. If you run a shop, decide now whether customers can record inside. Send this to the friend who keeps asking about smart glasses.",
+ "out": "/home/claude/vaelolab-media/social/2026-11/reel-news-google-intelligent-eyewear-preorder.mp4",
+ "cta_at": "Send this",
+ "scene_js": "scene_news.js",
+ "hook": "Google's AI glasses: *US$395*",
+ "cta": "Send this to the friend who keeps asking about <b>smart glasses</b>",
+ "beats": [
+  {
+   "n": 1,
+   "q": "Ask what you see",
+   "a": "Say \"Hey Gemini\" or tap",
+   "t0": "@Say Hey",
+   "ta": "@or tap"
+  },
+  {
+   "n": 2,
+   "q": "Live translation",
+   "a": "70+ languages",
+   "t0": "@They translate",
+   "ta": "@more than"
+  },
+  {
+   "n": 3,
+   "q": "Maps in your ear",
+   "t0": "@They read"
+  },
+  {
+   "n": 4,
+   "q": "Poster to calendar",
+   "t0": "@And they can"
+  },
+  {
+   "q": "Battery",
+   "a": "up to 9 hours",
+   "t0": "@The battery",
+   "ta": "@up to nine"
+  },
+  {
+   "q": "On sale <b>Dec 10</b>",
+   "a": "Warby Parker \u00b7 Gentle Monster",
+   "t0": "@Warby Parker",
+   "ta": "@both go"
+  },
+  {
+   "q": "The catch",
+   "a": "US and South Korea only",
+   "t0": "@The catch",
+   "ta": "@They only"
+  },
+  {
+   "q": "Shop owners",
+   "a": "set a recording rule",
+   "t0": "@If you run",
+   "ta": "@decide now"
+  }
+ ],
+ "scene": {
+  "image": "/home/claude/vaelolab/images/guides/news-google-intelligent-eyewear-preorder-1.webp",
+  "chips": [
+   {
+    "at": "@Say Hey",
+    "text": "Hey Gemini"
+   },
+   {
+    "at": "@They read",
+    "text": "Maps"
+   },
+   {
+    "at": "@And they can",
+    "text": "Calendar"
+   }
+  ],
+  "cards": [
+   {
+    "at": "@seventy languages",
+    "big": "70+",
+    "label": "languages"
+   },
+   {
+    "at": "@nine hours",
+    "big": "9 h",
+    "label": "battery"
+   },
+   {
+    "at": "@three ninety five",
+    "big": "US$395",
+    "label": "Warby Parker"
+   },
+   {
+    "at": "@four forty nine",
+    "big": "US$449",
+    "label": "Gentle Monster"
+   },
+   {
+    "at": "@US and South",
+    "big": "US + KR",
+    "label": "accounts only"
+   }
+  ]
+ },
+ "sfx": [
+  [
+   "whoosh",
+   0.05
+  ]
+ ]
+}

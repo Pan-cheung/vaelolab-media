@@ -60,14 +60,22 @@ for i in range(0, n, step):
     amp.append(round((sum(x * x for x in seg) / max(1, len(seg))) ** .5 / 9000, 3))
 scene_cfg['amp'] = amp
 
-# caption groups: break on sentence punctuation or every 5 words
-groups, cur = [], []
+# caption groups: one sentence at a time (split a long sentence at a comma or into halves, never more than 12 words)
+sents, cur = [], []
 for w in WORDS:
     cur.append(w)
-    if w[2][-1:] in '.?!,' or len(cur) >= 5:
-        groups.append(cur); cur = []
-if cur: groups.append(cur)
-caps = [[g[0][0], g[-1][1], [[x[0], x[2]] for x in g]] for g in groups]
+    if w[2][-1:] in '.?!':
+        sents.append(cur); cur = []
+if cur: sents.append(cur)
+groups = []
+def split(g):
+    if len(g) <= 12: groups.append(g); return
+    mid = len(g) // 2
+    commas = [i + 1 for i, w in enumerate(g[:-1]) if w[2][-1:] in ',;:' and 3 <= i + 1 <= len(g) - 3]
+    cut = min(commas, key=lambda i: abs(i - mid)) if commas else mid
+    split(g[:cut]); split(g[cut:])
+for g in sents: split(g)
+caps = [[g[0][0], (groups[i + 1][0][0] if i + 1 < len(groups) else g[-1][1] + 0.4), [[x[0], x[2]] for x in g]] for i, g in enumerate(groups)]
 
 
 def logo_svg(cid):
@@ -104,8 +112,8 @@ background:radial-gradient(ellipse 85% 45% at 50% 55%,#2a5c3d 0%,#133621 55%,#0b
 #a{{background:#f2f3ef;color:#133621;font-weight:800;font-size:60px;padding:14px 38px;border-radius:999px}}
 #a:empty{{display:none}}
 #cta{{top:230px;font-size:76px;font-weight:800;line-height:1.02;letter-spacing:-1.5px;text-shadow:0 6px 30px rgba(0,0,0,.4)}}#cta b{{color:#f4d96c}}
-#capt{{position:absolute;left:60px;right:60px;top:1450px;text-align:center}}
-#capt div{{display:inline-block;background:rgba(10,24,16,.74);border-radius:24px;padding:12px 28px;font-size:54px;font-weight:650;line-height:1.2}}
+#capt{{position:absolute;left:60px;right:60px;top:1400px;text-align:center}}
+#capt div{{display:inline-block;max-width:960px;background:rgba(10,24,16,.74);border-radius:24px;padding:12px 28px;font-size:52px;font-weight:650;line-height:1.22}}
 #capt span{{opacity:.32}}#capt span.on{{opacity:1}}
 #outro{{position:absolute;inset:0;background:#133621;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0}}
 #outro .lw{{width:760px;color:#f4d96c}}#outro p{{font-size:60px;font-weight:650;margin:70px 0 0;text-align:center;line-height:1.25}}#outro p b{{color:#f4d96c}}
@@ -145,7 +153,7 @@ window.render=function(t){{
  $('cta').style.opacity=cl((t-CTA)/.25)*cl((VO+.1-t)/.2);
  $('cta').style.transform='scale('+(0.85+0.15*pop((t-CTA)/.35))+')';
  $('outro').style.opacity=cl((t-VO-.05)/.3); logo(document.querySelector('#outro .lw'),t-VO-.15);
- const cap=$('capt');let g=null;for(const q of CAPS) if(t>=q[0]-.05&&t<q[1]+.25) g=q;
+ const cap=$('capt');let g=null;for(const q of CAPS) if(t>=q[0]-.05&&t<q[1]-.05) g=q;
  if(!g||t>=VO+.1){{cap.innerHTML='';return}}
  cap.innerHTML='<div>'+g[2].map(w=>'<span class="'+(t>=w[0]-.04?'on':'')+'">'+w[1]+'</span>').join(' ')+'</div>';
 }};
