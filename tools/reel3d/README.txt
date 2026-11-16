@@ -31,3 +31,26 @@ Standards (Pan, Nov 15 2026)
   Top text sits at 230 px and must never cover the 3D; captions at 1400 px.
   No logo at the start; gold animated logo outro at the end. First frame already moving with the hook on screen.
   Keep any two 3D surfaces at least 0.03 apart (z fighting makes things blink).
+
+APPROVED NEWS STYLE (Pan, Nov 16 2026): scene_story.js, one 3D scene per voiceover sentence
+  cfg-news-example.json is the approved Google eyewear Reel (45 s). Copy its structure.
+  scene_js "scene_story.js"; scene.scenes is a list, one entry per sentence: {"at": "@first words of the sentence" (first one 0.0), "type": ..., params}
+  The engine already rotates camera moves (push, orbit, crane, truck, dutch), entry styles (slide, drop, spin, zoom, flip),
+  backdrop tint and bokeh, so consecutive scenes always look different. Never use the same type twice in a row.
+  Types and params:
+    hero        img, tag            portrait photo flips in, price or key value tag swings, 3D number
+    product     img                 product photo standing on a turntable with a gold ring
+    bubble      img, text           speech bubble (a wake word, a prompt, a quote of the feature name), sound rings
+    languages   big, words[]        globe with greeting bubbles swapping, 3D count
+    map         (none)              street map, route draws, pin drops (directions, location, delivery)
+    calendar    img, month, day     a card flies into a calendar block (dates, scheduling, deadlines)
+    battery     big, small, count   battery fills, charges pop (battery, capacity, quotas, limits that fill up)
+    pricecards  items[{img, tag}], badge, badgeAt   two photo cards with price tags and a badge (pricing, plans, editions)
+    warning     (none)              spinning warning sign (the catch, risks)
+    globe       pins[{lat, lon, text}]   globe turns, pins rise (countries, regions, availability)
+    shop        sign, question      shopfront with camera and hanging sign (what it means for a small business)
+    send        img                 paper plane loops a phone showing a photo (the final send line)
+    bignumber   big, label          3D number on a slab with bursting cubes (any key figure)
+  Real photos: 2 to 5 official images from the company's own page or press kit (og:image plus in article images).
+  Download them through vaelolab-media: incoming/<name>.json {"url": "<exact image url>", "path": "social/YYYY-MM/img-<slug>-<n>.jpg"} (any image format is fine),
+  then shrink copies to /tmp/img/<slug>-<n>.jpg with PIL (thumbnail 1600) and use those paths. Never use photos of public figures.

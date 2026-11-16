@@ -5,14 +5,18 @@
  "text": "Google's Gemini glasses are now open for pre order, and they start at three hundred ninety five US dollars. Here's what you get. Say Hey Gemini, or tap the frame, and ask about whatever you're looking at. They translate live speech in more than seventy languages. They read Google Maps directions into your ear. And they can add an event from a poster straight to your calendar. The battery lasts up to nine hours, and the case refills them up to seven times. Warby Parker frames start at three ninety five, Gentle Monster at four forty nine, and both go on sale December tenth. The catch. They only work with Google accounts from the US and South Korea. If you run a shop, decide now whether customers can record inside. Send this to the friend who keeps asking about smart glasses.",
  "out": "/home/claude/vaelolab-media/social/2026-11/reel-news-google-intelligent-eyewear-preorder.mp4",
  "cta_at": "Send this",
- "scene_js": "scene_news.js",
+ "scene_js": "scene_story.js",
  "hook": "Google's AI glasses: *US$395*",
  "cta": "Send this to the friend who keeps asking about <b>smart glasses</b>",
  "beats": [
   {
+   "q": "Here's what you get",
+   "t0": "@Here's what"
+  },
+  {
    "n": 1,
    "q": "Ask what you see",
-   "a": "Say \"Hey Gemini\" or tap",
+   "a": "\"Hey Gemini\" or tap",
    "t0": "@Say Hey",
    "ta": "@or tap"
   },
@@ -35,21 +39,21 @@
   },
   {
    "q": "Battery",
-   "a": "up to 9 hours",
+   "a": "9 h, case refills 7x",
    "t0": "@The battery",
-   "ta": "@up to nine"
+   "ta": "@and the case"
   },
   {
    "q": "On sale <b>Dec 10</b>",
-   "a": "Warby Parker \u00b7 Gentle Monster",
-   "t0": "@Warby Parker",
-   "ta": "@both go"
+   "t0": "@Warby Parker"
   },
   {
    "q": "The catch",
-   "a": "US and South Korea only",
-   "t0": "@The catch",
-   "ta": "@They only"
+   "t0": "@The catch"
+  },
+  {
+   "q": "US + South Korea only",
+   "t0": "@They only"
   },
   {
    "q": "Shop owners",
@@ -59,46 +63,93 @@
   }
  ],
  "scene": {
-  "image": "/home/claude/vaelolab/images/guides/news-google-intelligent-eyewear-preorder-1.webp",
-  "chips": [
+  "scenes": [
+   {
+    "at": 0.0,
+    "type": "hero",
+    "img": "/tmp/img/news-google-intelligent-eyewear-preorder-gm-lifestyle.jpg",
+    "tag": "US$395"
+   },
+   {
+    "at": "@Here's what",
+    "type": "product",
+    "img": "/tmp/img/news-google-intelligent-eyewear-preorder-wp-product.jpg"
+   },
    {
     "at": "@Say Hey",
+    "type": "bubble",
+    "img": "/tmp/img/news-google-intelligent-eyewear-preorder-gm-product.jpg",
     "text": "Hey Gemini"
    },
    {
+    "at": "@They translate",
+    "type": "languages",
+    "big": "70+"
+   },
+   {
     "at": "@They read",
-    "text": "Maps"
+    "type": "map"
    },
    {
     "at": "@And they can",
-    "text": "Calendar"
-   }
-  ],
-  "cards": [
-   {
-    "at": "@seventy languages",
-    "big": "70+",
-    "label": "languages"
+    "type": "calendar",
+    "img": "/tmp/img/news-google-intelligent-eyewear-preorder-lineup.jpg",
+    "month": "ADDED",
+    "day": "\u2713"
    },
    {
-    "at": "@nine hours",
+    "at": "@The battery",
+    "type": "battery",
     "big": "9 h",
-    "label": "battery"
+    "small": "7 refills",
+    "count": 7
    },
    {
-    "at": "@three ninety five",
-    "big": "US$395",
-    "label": "Warby Parker"
+    "at": "@Warby Parker",
+    "type": "pricecards",
+    "items": [
+     {
+      "img": "/tmp/img/news-google-intelligent-eyewear-preorder-wp-lifestyle.jpg",
+      "tag": "US$395"
+     },
+     {
+      "img": "/tmp/img/news-google-intelligent-eyewear-preorder-gm-lifestyle.jpg",
+      "tag": "US$449"
+     }
+    ],
+    "badge": "Dec 10",
+    "badgeAt": "@both go"
    },
    {
-    "at": "@four forty nine",
-    "big": "US$449",
-    "label": "Gentle Monster"
+    "at": "@The catch",
+    "type": "warning"
    },
    {
-    "at": "@US and South",
-    "big": "US + KR",
-    "label": "accounts only"
+    "at": "@They only",
+    "type": "globe",
+    "pins": [
+     {
+      "lat": 39,
+      "lon": -98,
+      "text": "US"
+     },
+     {
+      "lat": 36,
+      "lon": 128,
+      "text": "South Korea"
+     }
+    ]
+   },
+   {
+    "at": "@If you run",
+    "type": "shop",
+    "sign": "YOUR SHOP",
+    "question": "Recording?"
+   },
+   {
+    "at": "@Send this",
+    "type": "send",
+    "img": "/tmp/img/news-google-intelligent-eyewear-preorder-lineup.jpg"
    }
   ]
  },
