@@ -1,0 +1,57 @@
+name: Record footage
+
+# Drop incoming/rec-<name>.json with {"script": "tools/record/<name>.js", "path": "social/YYYY-MM/raw-<name>"}.
+# This workflow runs the Playwright script in headless Chromium against real public pages,
+# converts the recording to MP4 and commits <path>.mp4 plus <path>.marks.json and <path>.last.png.
+on:
+  push:
+    paths:
+      - "incoming/rec-*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: record
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null && npm i --silent playwright@1.48.2
+          npx playwright install --with-deps chromium
+          sudo apt-get install -y -qq ffmpeg >/dev/null
+      - name: Record
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          for req in incoming/rec-*.json; do
+            script=$(jq -r '.script' "$req"); dest=$(jq -r '.path' "$req")
+            case "$script" in tools/record/*.js) ;; *) echo "Refusing $script"; git rm -q "$req"; continue ;; esac
+            case "$dest" in social/*) ;; *) echo "Refusing $dest"; git rm -q "$req"; continue ;; esac
+            rm -rf /tmp/rec && mkdir -p "$(dirname "$dest")"
+            if NODE_PATH=/tmp/pw/node_modules timeout 300 node "$script" /tmp/rec; then
+              ffmpeg -loglevel error -y -i /tmp/rec/raw.webm -r 30 -c:v libx264 -preset veryfast -crf 16 -pix_fmt yuv420p "$dest.mp4"
+              cp /tmp/rec/marks.json "$dest.marks.json"; cp /tmp/rec/last.png "$dest.last.png"
+              git add "$dest.mp4" "$dest.marks.json" "$dest.last.png"
+            else
+              echo "FAILED $req"
+              [ -f /tmp/rec/raw.webm ] && ffmpeg -loglevel error -y -i /tmp/rec/raw.webm -c:v libx264 -preset veryfast "$dest.failed.mp4" && git add "$dest.failed.mp4" || true
+            fi
+            git rm -q "$req"
+          done
+      - name: Commit
+        run: |
+          git config user.name "Pan-cheung"
+          git config user.email "cheungpan63@gmail.com"
+          if git diff --cached --quiet; then echo "Nothing to commit"; exit 0; fi
+          git commit -m "Add recorded footage"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
