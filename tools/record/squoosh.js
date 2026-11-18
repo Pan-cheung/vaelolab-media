@@ -7,7 +7,7 @@ const path = require('path');
 
 const out = process.argv[2] || 'rec-out';
 fs.mkdirSync(out, { recursive: true });
-const photo = path.join(__dirname, 'assets', 'shop-owner.jpg');
+const photo = path.join(__dirname, 'assets', process.env.PHOTO || 'shop-owner.jpg');
 
 const CURSOR = `
 (() => {
