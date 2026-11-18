@@ -66,7 +66,7 @@ const CURSOR = `
   await snap('editor'); await dump('editor');
 
   // Sweep the before and after divider across the photo.
-  const midY = Math.round(H * 0.38);
+  const midY = Math.round(H / 2);
   await glide(W / 2, midY, 15);
   await page.mouse.down();
   await glide(W * 0.18, midY, 40); await glide(W * 0.85, midY, 60); await glide(W * 0.5, midY, 40);
