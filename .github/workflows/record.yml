@@ -41,7 +41,8 @@ jobs:
             if NODE_PATH=/tmp/pw/node_modules timeout 300 node "$script" /tmp/rec; then
               ffmpeg -loglevel error -y -i /tmp/rec/raw.webm -r 30 -c:v libx264 -preset veryfast -crf 16 -pix_fmt yuv420p "$dest.mp4"
               cp /tmp/rec/marks.json "$dest.marks.json"; cp /tmp/rec/last.png "$dest.last.png"
-              git add "$dest.mp4" "$dest.marks.json" "$dest.last.png"
+              mkdir -p "$dest.shots"; cp /tmp/rec/shot-*.png "$dest.shots/" 2>/dev/null || true
+              git add "$dest.mp4" "$dest.marks.json" "$dest.last.png" "$dest.shots"
             else
               echo "FAILED $req"
               [ -f /tmp/rec/raw.webm ] && ffmpeg -loglevel error -y -i /tmp/rec/raw.webm -c:v libx264 -preset veryfast "$dest.failed.mp4" && git add "$dest.failed.mp4" || true
