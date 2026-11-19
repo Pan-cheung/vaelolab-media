@@ -1,6 +1,34 @@
 [
- {"file": "social/backup/reel-kintsugi-slider.mp4", "topic": "Lab demo: kintsugi gift card slider (cracks and mends in gold)", "created": "2026-11-18", "used": null,
-  "hook": "This slider cracks in gold", "cover_ms": 2000,
+ {
+  "file": "social/backup/reel-kintsugi-slider.mp4",
+  "topic": "Lab demo: kintsugi gift card slider (cracks and mends in gold)",
+  "created": "2026-11-18",
+  "used": null,
+  "hook": "This slider cracks in gold",
+  "cover_ms": 2000,
   "qa": "a first frame hook over moving footage; b captions at 25/50/75%; c motion 0 to 3s; d cover 2000 ms; e no flashes (YAVG 118 to 119), audio from 0.05s, 21.5s",
-  "caption": "Gift card slider that cracks in gold: a free Website Lab effect\n\nRush the handle and fine cracks open. A moment later they fill with gold and fade.\nDrag it gently and nothing breaks. The amount updates either way.\nThe code is free on vaelolab.com/lab.\nSend this to someone who runs a business.\nFollow @vaelolab for free tools that save you time.\n#websitedesign #giftcards #smallbusinesswebsite #webdesigntips"}
+  "caption": "Gift card slider that cracks in gold: a free Website Lab effect\n\nRush the handle and fine cracks open. A moment later they fill with gold and fade.\nDrag it gently and nothing breaks. The amount updates either way.\nThe code is free on vaelolab.com/lab.\nSend this to someone who runs a business.\nFollow @vaelolab for free tools that save you time.\n#websitedesign #giftcards #smallbusinesswebsite #webdesigntips"
+ },
+ {
+  "file": "social/backup/reel-stubborn-slider.mp4",
+  "topic": "Lab demo: stubborn party size slider (stretches past 8, springs back, call note)",
+  "created": "2026-11-19",
+  "used": null,
+  "hook": "Party of 12? The slider pushes back",
+  "cover_ms": 5000,
+  "voice": "ElevenLabs Lexi eleven_v4",
+  "qa": "a hook over moving demo at frame 0; b captions at 25/50/75%; c motion 0 to 3s (drag to 8 and strain); d longest still gap 3.4s; e cover 5000 ms; f no flashes (luma 116 to 242), audio from 0.07s, 22.8s, logo end card",
+  "caption": "Party of 12? The slider pushes back\n\nYour booking slider stops at 8. Drag past it and the handle stretches like elastic, springs back, and a note asks big groups to call for the long table. Keyboard arrows work too.\n\nThe code is free in the Website Lab at vaelolab.com/lab\n\nSend this to the restaurant owner who dreads surprise group bookings.\n\n#restaurantwebsite #smallbusinesswebsite #webdesign #onlinebooking #websitedesign"
+ },
+ {
+  "file": "social/backup/reel-eject-clear-input.mp4",
+  "topic": "Lab demo: eject search input (clear button throws letters out)",
+  "created": "2026-11-19",
+  "used": null,
+  "hook": "Your search box throws words out",
+  "cover_ms": 1250,
+  "voice": "ElevenLabs Lexi eleven_v4",
+  "qa": "a hook over moving demo at frame 0; b captions at 25/50/75%; c motion 0 to 3s (pointer to cross, letters fly at 1.1s); d longest still gap 2.7s; e cover 1250 ms; f no flashes (luma 95 to 242), audio from 0.07s, 24.6s, logo end card",
+  "caption": "Your search box throws words out\n\nTap the gold cross and the old search jumps out of the box letter by letter. The field empties, the cursor waits, and the lunch menu filters as you type. Escape clears it too.\n\nThe code is free in the Website Lab at vaelolab.com/lab\n\nSend this to the café owner with a long lunch menu.\n\n#cafewebsite #restaurantwebsite #webdesign #smallbusinesswebsite #websitedesign"
+ }
 ]
