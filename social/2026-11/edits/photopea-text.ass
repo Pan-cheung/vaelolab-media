@@ -1,0 +1,28 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Jost Bold V,58,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,14,0,8,90,90,1330,1
+Style: Lab,Jost Bold V,54,&H00213613,&H00213613,&H0069D2EB,&H0069D2EB,0,0,0,0,100,100,0,0,3,10,0,7,50,50,800,1
+Style: Hook,Jost Bold V,92,&H0069D2EB,&H0069D2EB,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,22,0,8,90,90,330,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,0:00:04.40,Hook,,0,0,0,,Add text to photos free
+Dialogue: 0,0:00:00.00,0:00:04.45,Cap,,0,0,0,,Put OPEN SUNDAY on your shop photo for free, right in your browser.
+Dialogue: 0,0:00:04.45,0:00:08.55,Cap,,0,0,0,,This is Photopea, a free photo editor that runs in the browser.
+Dialogue: 0,0:00:08.55,0:00:10.60,Cap,,0,0,0,,Tap Start using Photopea.
+Dialogue: 0,0:00:10.60,0:00:13.25,Cap,,0,0,0,,We didn't sign in or install anything.
+Dialogue: 0,0:00:13.25,0:00:16.35,Cap,,0,0,0,,Drag your photo onto the drop box, and it opens.
+Dialogue: 0,0:00:16.35,0:00:20.75,Cap,,0,0,0,,Press T for the text tool, click where you want the words, and type.
+Dialogue: 0,0:00:20.75,0:00:22.60,Cap,,0,0,0,,Hit the check mark to confirm.
+Dialogue: 0,0:00:22.60,0:00:26.90,Cap,,0,0,0,,Then go to File, Export as, and pick JPG.
+Dialogue: 0,0:00:26.90,0:00:30.95,Cap,,0,0,0,,Slide the quality down, and the file size shrinks before you save.
+Dialogue: 0,0:00:30.95,0:00:34.25,Cap,,0,0,0,,Photopea says your files never leave your device.
+Dialogue: 0,0:00:34.25,0:00:40.60,Cap,,0,0,0,,The catch: the free version runs on ads, and they can cover 5 to 15% of your screen.
+Dialogue: 0,0:00:40.60,0:00:45.30,Cap,,0,0,0,,Send this to the friend who pays for an editor just to add text to photos!
+Dialogue: 1,0:00:34.40,0:00:40.60,Lab,,0,0,0,,Ad space
