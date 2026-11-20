@@ -53,9 +53,17 @@ const CURSOR = `
   };
   const scrollSlow = async (dy, steps = 30) => { for (let i = 0; i < steps; i++) { await page.mouse.wheel(0, dy / steps); await page.waitForTimeout(40); } };
 
+  // Plain check that vaelolab.com answers from this runner (separate context, not recorded).
+  try {
+    const c2 = await browser.newContext(); const p2 = await c2.newPage();
+    const r = await p2.goto('https://vaelolab.com/', { timeout: 30000 });
+    marks.vaelolab_status = r ? r.status() : 'no response'; marks.vaelolab_title = await p2.title();
+    await c2.close();
+  } catch (e) { marks.vaelolab_status = 'error ' + String(e).slice(0, 200); }
   await page.goto('https://pagespeed.web.dev/', { waitUntil: 'networkidle', timeout: 60000 }).catch(() => {});
   await page.waitForTimeout(1500);
   mark('home');
+  await page.getByText('Ok, Got it.').click({ timeout: 3000 }).catch(() => {});
   await snap('home'); await dump('home');
   const input = page.locator('input[type=url], input[name=url], input[type=text]').first();
   const ib = await input.boundingBox().catch(() => null);
@@ -63,7 +71,9 @@ const CURSOR = `
   await page.mouse.down(); await page.mouse.up();
   await input.click().catch(() => {});
   mark('type');
-  await input.type('https://vaelolab.com', { delay: 110 }).catch(() => {});
+  const TARGET = process.env.TARGET || 'https://squoosh.app';
+  marks.target = TARGET;
+  await input.type(TARGET, { delay: 110 }).catch(() => {});
   await page.waitForTimeout(600);
   await snap('typed');
   const btn = page.getByRole('button', { name: /analy[sz]e/i }).first();
@@ -77,6 +87,7 @@ const CURSOR = `
   for (let i = 0; i < 150; i++) {
     await page.waitForTimeout(1000);
     const txt = await page.evaluate(() => document.body.innerText).catch(() => '');
+    if (/Unable to resolve|Lighthouse returned error/i.test(txt.slice(0, 1500)) && i > 5) { marks.psi_error = txt.slice(0, 400); break; }
     if (/Diagnose performance issues/i.test(txt) && /Performance/.test(txt) && !/Analyzing/i.test(txt.slice(0, 3000))) { ok = true; break; }
     if (i % 10 === 5) await glide(200 + (i % 3) * 120, 600 + (i % 2) * 200, 20);
   }
