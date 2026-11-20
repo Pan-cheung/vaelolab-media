@@ -25,10 +25,12 @@ jobs:
         with:
           node-version: 20
       - name: Install Playwright
+        timeout-minutes: 12
         run: |
           mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null && npm i --silent playwright@1.48.2
-          npx playwright install --with-deps chromium
-          sudo apt-get install -y -qq ffmpeg >/dev/null
+          # The apt step sometimes hangs; retry with a time limit.
+          for i in 1 2 3; do timeout 240 npx playwright install --with-deps chromium && break; echo "install retry $i"; done
+          for i in 1 2 3; do timeout 180 sudo apt-get install -y -qq ffmpeg >/dev/null && break; echo "ffmpeg retry $i"; done
       - name: Record
         run: |
           set -euo pipefail
