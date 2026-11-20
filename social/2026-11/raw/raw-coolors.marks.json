@@ -1,0 +1,81 @@
+{
+ "home": 4.092,
+ "dom_home": [
+  [
+   "A",
+   "Cloudflare, opens in a new tab",
+   388,
+   1246,
+   61,
+   18
+  ],
+  [
+   "A",
+   "Privacy, opens in a new tab",
+   467,
+   1246,
+   43,
+   18
+  ]
+ ],
+ "dom_clean": [
+  [
+   "A",
+   "Cloudflare, opens in a new tab",
+   388,
+   1246,
+   61,
+   18
+  ],
+  [
+   "A",
+   "Privacy, opens in a new tab",
+   467,
+   1246,
+   43,
+   18
+  ]
+ ],
+ "space": 8.427,
+ "space_done": 21.13,
+ "dom_palette": [
+  [
+   "A",
+   "Cloudflare, opens in a new tab",
+   388,
+   1246,
+   61,
+   18
+  ],
+  [
+   "A",
+   "Privacy, opens in a new tab",
+   467,
+   1246,
+   43,
+   18
+  ]
+ ],
+ "hover": 21.234,
+ "dom_hover": [
+  [
+   "A",
+   "Cloudflare, opens in a new tab",
+   388,
+   1246,
+   61,
+   18
+  ],
+  [
+   "A",
+   "Privacy, opens in a new tab",
+   467,
+   1246,
+   43,
+   18
+  ]
+ ],
+ "after_lock": 60.232,
+ "end": 63.854,
+ "text": "coolors.co\nPerforming security verification\n\nThis website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.\n\nRay ID: a5d6f5baec4aff80\nPerformance and Security by Cloudflare\nPrivacy"
+}
