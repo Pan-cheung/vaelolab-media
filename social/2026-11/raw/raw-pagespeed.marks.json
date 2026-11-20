@@ -1,0 +1,79 @@
+{
+ "home": 2.459,
+ "dom_home": [
+  [
+   "BUTTON",
+   "Ok, Got it.",
+   120,
+   1222,
+   83,
+   36
+  ],
+  [
+   "INPUT",
+   "",
+   16,
+   79,
+   571,
+   48
+  ],
+  [
+   "BUTTON",
+   "Analyze",
+   603,
+   79,
+   101,
+   48
+  ],
+  [
+   "H1",
+   "Make your web pages fast on all devices",
+   32,
+   482,
+   640,
+   88
+  ]
+ ],
+ "type": 3.144,
+ "analyze": 6.937,
+ "report_ok": false,
+ "report": 161.972,
+ "dom_report": [
+  [
+   "BUTTON",
+   "Copy Link",
+   535,
+   14,
+   113,
+   36
+  ],
+  [
+   "BUTTON",
+   "Ok, Got it.",
+   120,
+   1222,
+   83,
+   36
+  ],
+  [
+   "INPUT",
+   "",
+   24,
+   79,
+   555,
+   48
+  ],
+  [
+   "BUTTON",
+   "Analyze",
+   595,
+   79,
+   101,
+   48
+  ]
+ ],
+ "scroll1": 163.913,
+ "scroll_end": 180.898,
+ "end": 212.4,
+ "text": "PageSpeed Insights\nCopy Link\nDocs\nThis site uses cookies from Google to deliver its services and to analyze traffic.\nLearn More.\nOk, Got it.\n\nEnter a valid URL\n\nAnalyze\nUnable to resolve https://vaelolab.com/. Try checking the URL for validity.\nMore on PageSpeed Insights\nWhat's new\nDocumentation\nLearn about Web Performance\nAsk questions on Stack Overflow\nMailing list\nRelated Content\nUpdates\nWeb Fundamentals\nCase Studies\nPodcasts\nConnect\nTwitter\nYoutube\nChrome\nFirebase\nAll products\nTerms and Privacy Policy\nFor details, see the Google Developers Site Policies."
+}
