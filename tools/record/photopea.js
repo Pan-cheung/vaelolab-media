@@ -60,9 +60,19 @@ const CURSOR = `
   mark('start'); await clickText(/Start using Photopea/);
   await page.waitForTimeout(9000);
   mark('editor'); await snap('editor'); await dump('editor');
-  const [fc] = await Promise.all([page.waitForEvent('filechooser', { timeout: 8000 }).catch(() => null), clickText(/Open From Computer/i)]);
-  marks.fc = !!fc;
-  if (fc) await fc.setFiles(path.join(__dirname, 'assets', 'cafe-counter.jpg'));
+  // Drag the photo from the computer onto the "Drop any files here" box (real drop event on the page).
+  await glide(530, 470, 30); await page.waitForTimeout(500);
+  const b64 = fs.readFileSync(path.join(__dirname, 'assets', 'cafe-counter.jpg')).toString('base64');
+  mark('drop');
+  await glide(520, 450, 30);
+  marks.drop = await page.evaluate(async ({ b64, x, y }) => {
+    const bin = atob(b64); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    const file = new File([u], 'cafe-counter.jpg', { type: 'image/jpeg' });
+    const dt = new DataTransfer(); dt.items.add(file);
+    const el = document.elementFromPoint(x, y) || document.body;
+    for (const t of ['dragenter', 'dragover', 'drop']) el.dispatchEvent(new DragEvent(t, { bubbles: true, cancelable: true, dataTransfer: dt, clientX: x, clientY: y }));
+    return el.tagName + '.' + (el.className || '');
+  }, { b64, x: 350, y: 450 }).catch(e => 'err ' + String(e).slice(0, 200));
   await page.waitForTimeout(5000);
   mark('opened'); await snap('opened'); await dump('opened');
   // Text tool: press T, click on photo, type.
@@ -74,8 +84,8 @@ const CURSOR = `
   await page.waitForTimeout(1000); await snap('committed');
   // Export as JPG.
   mark('file'); await clickText(/^File$/); await page.waitForTimeout(1200); await snap('file-menu'); await dump('file-menu');
-  mark('exportas'); await clickText(/^Export as$/); await page.waitForTimeout(1200); await snap('export-menu'); await dump('export-menu');
-  mark('jpg'); await clickText(/^JPG$/); await page.waitForTimeout(2500); await snap('jpg-dialog'); await dump('jpg-dialog');
+  mark('exportas'); { const l = page.getByText(/^Export as$/).first(); const b = await l.boundingBox({ timeout: 4000 }).catch(() => null); if (b) { await glide(b.x + b.width / 2, b.y + b.height / 2, 22); await page.waitForTimeout(900); await glide(b.x + b.width + 120, b.y + b.height / 2, 15); } } await page.waitForTimeout(1200); await snap('export-menu'); await dump('export-menu');
+  mark('jpg'); await clickText(/^JPG/); await page.waitForTimeout(2500); await snap('jpg-dialog'); await dump('jpg-dialog');
   const dlp = page.waitForEvent('download', { timeout: 8000 }).catch(() => null);
   mark('save'); await clickText(/^Save$/);
   const dl = await dlp; marks.download = dl ? dl.suggestedFilename() : null;
