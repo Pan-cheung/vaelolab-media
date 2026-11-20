@@ -1,0 +1,67 @@
+{
+ "vaelolab_status": 403,
+ "vaelolab_title": "Just a moment...",
+ "home": 2.932,
+ "dom_home": [
+  [
+   "INPUT",
+   "",
+   16,
+   79,
+   571,
+   48
+  ],
+  [
+   "BUTTON",
+   "Analyze",
+   603,
+   79,
+   101,
+   48
+  ],
+  [
+   "H1",
+   "Make your web pages fast on all devices",
+   32,
+   482,
+   640,
+   88
+  ]
+ ],
+ "type": 3.695,
+ "target": "https://squoosh.app",
+ "analyze": 7.356,
+ "psi_error": "PageSpeed Insights\nCopy Link\nDocs\n\nEnter a valid URL\n\nAnalyze\nUnable to resolve https://squoosh.app/. Try checking the URL for validity.\nMore on PageSpeed Insights\nWhat's new\nDocumentation\nLearn about Web Performance\nAsk questions on Stack Overflow\nMailing list\nRelated Content\nUpdates\nWeb Fundamentals\nCase Studies\nPodcasts\nConnect\nTwitter\nYoutube\nChrome\nFirebase\nAll products\nTerms and Privacy Poli",
+ "report_ok": false,
+ "report": 15.732,
+ "dom_report": [
+  [
+   "BUTTON",
+   "Copy Link",
+   535,
+   14,
+   113,
+   36
+  ],
+  [
+   "INPUT",
+   "",
+   24,
+   79,
+   555,
+   48
+  ],
+  [
+   "BUTTON",
+   "Analyze",
+   595,
+   79,
+   101,
+   48
+  ]
+ ],
+ "scroll1": 17.688,
+ "scroll_end": 34.525,
+ "end": 66.03,
+ "text": "PageSpeed Insights\nCopy Link\nDocs\n\nEnter a valid URL\n\nAnalyze\nUnable to resolve https://squoosh.app/. Try checking the URL for validity.\nMore on PageSpeed Insights\nWhat's new\nDocumentation\nLearn about Web Performance\nAsk questions on Stack Overflow\nMailing list\nRelated Content\nUpdates\nWeb Fundamentals\nCase Studies\nPodcasts\nConnect\nTwitter\nYoutube\nChrome\nFirebase\nAll products\nTerms and Privacy Policy\nFor details, see the Google Developers Site Policies."
+}
