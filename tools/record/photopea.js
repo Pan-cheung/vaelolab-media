@@ -75,20 +75,41 @@ const CURSOR = `
   }, { b64, x: 350, y: 450 }).catch(e => 'err ' + String(e).slice(0, 200));
   await page.waitForTimeout(5000);
   mark('opened'); await snap('opened'); await dump('opened');
-  // Text tool: press T, click on photo, type.
-  await glide(360, 640, 20); await page.keyboard.press('t'); await page.waitForTimeout(600);
-  mark('text'); await page.mouse.click(200, 560); await page.waitForTimeout(800);
-  await page.keyboard.type('OPEN SUNDAY 9 TO 3', { delay: 120 });
-  await page.waitForTimeout(800); await snap('typed'); await dump('typed');
-  await page.keyboard.press('v'); await page.waitForTimeout(300); await page.mouse.click(360, 1000).catch(() => {});
-  await page.waitForTimeout(1000); await snap('committed');
+  // Text tool: press T, set a big size, click on the photo, type, confirm.
+  await glide(360, 640, 20); await page.keyboard.press('t'); await page.waitForTimeout(800);
+  mark('text');
+  marks.top_inputs = await page.evaluate(() => [...document.querySelectorAll('input')].map(e => { const b = e.getBoundingClientRect(); return [e.type, e.value, Math.round(b.x), Math.round(b.y), Math.round(b.width)]; }).filter(a => a[3] < 70 && a[4] > 0)).catch(e => String(e));
+  const sizeBox = Array.isArray(marks.top_inputs) ? marks.top_inputs.find(a => /px/.test(a[1]) || /^\d+(\.\d+)?$/.test(a[1])) : null;
+  if (sizeBox) {
+    await glide(sizeBox[2] + sizeBox[4] / 2, sizeBox[3] + 11, 20); await page.mouse.click(sizeBox[2] + sizeBox[4] / 2, sizeBox[3] + 11, { clickCount: 3 });
+    await page.keyboard.press('Control+A'); await page.keyboard.type('150 px', { delay: 60 }); await page.keyboard.press('Enter'); await page.waitForTimeout(600);
+  }
+  await glide(70, 560, 25); await page.mouse.click(70, 560); await page.waitForTimeout(900);
+  await page.keyboard.type('OPEN SUNDAY', { delay: 140 });
+  await page.waitForTimeout(900); await snap('typed'); await dump('typed');
+  const conf = page.locator('[title="Confirm"], button:has-text("Confirm")').first();
+  const cb = await conf.boundingBox().catch(() => null);
+  if (cb) { await glide(cb.x + cb.width / 2, cb.y + cb.height / 2, 25); await page.mouse.down(); await page.mouse.up(); } else { await page.keyboard.press('Escape'); }
+  mark('confirmed'); await page.waitForTimeout(1200); await snap('committed');
+  await glide(230, 650, 30); await glide(380, 700, 30); await page.waitForTimeout(600);
   // Export as JPG.
   mark('file'); await clickText(/^File$/); await page.waitForTimeout(1200); await snap('file-menu'); await dump('file-menu');
   mark('exportas'); { const l = page.getByText(/^Export as$/).first(); const b = await l.boundingBox({ timeout: 4000 }).catch(() => null); if (b) { await glide(b.x + b.width / 2, b.y + b.height / 2, 22); await page.waitForTimeout(900); await glide(b.x + b.width + 120, b.y + b.height / 2, 15); } } await page.waitForTimeout(1200); await snap('export-menu'); await dump('export-menu');
   mark('jpg'); await clickText(/^JPG/); await page.waitForTimeout(2500); await snap('jpg-dialog'); await dump('jpg-dialog');
+  // Drag the quality slider down and watch the file size change.
+  const rng = page.locator('input[type=range]').last();
+  const rb = await rng.boundingBox().catch(() => null);
+  marks.range = rb;
+  if (rb) {
+    const y = rb.y + rb.height / 2;
+    await glide(rb.x + rb.width * 0.7, y, 25); mark('quality');
+    await page.mouse.down(); await glide(rb.x + rb.width * 0.35, y, 45); await page.waitForTimeout(400); await glide(rb.x + rb.width * 0.5, y, 30); await page.mouse.up();
+    await page.waitForTimeout(1500); await snap('quality'); await dump('quality');
+  }
   const dlp = page.waitForEvent('download', { timeout: 8000 }).catch(() => null);
   mark('save'); await clickText(/^Save$/);
   const dl = await dlp; marks.download = dl ? dl.suggestedFilename() : null;
+  if (dl) { const fp = path.join(out, 'export.jpg'); await dl.saveAs(fp).catch(() => {}); try { marks.export_bytes = fs.statSync(fp).size; fs.copyFileSync(fp, path.join(out, 'shot-99-export.png')); } catch (e) {} }
   await page.waitForTimeout(2500); await snap('saved');
   mark('end');
   marks.text = (await page.evaluate(() => document.body.innerText).catch(() => '')).slice(0, 3000);
