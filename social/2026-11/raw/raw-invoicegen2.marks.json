@@ -1,0 +1,298 @@
+{
+ "home": 5.77,
+ "fields": [
+  [
+   "BUTTON",
+   "",
+   0
+  ],
+  [
+   "BUTTON",
+   "",
+   0
+  ],
+  [
+   "BUTTON",
+   "",
+   0
+  ],
+  [
+   "BUTTON",
+   "Toggle navigation",
+   16
+  ],
+  [
+   "BUTTON",
+   "Change Language",
+   0
+  ],
+  [
+   "BUTTON",
+   "Enable Dark Mode",
+   0
+  ],
+  [
+   "BUTTON",
+   "Enable Light Mode",
+   0
+  ],
+  [
+   "BUTTON",
+   "",
+   105
+  ],
+  [
+   "INPUT",
+   "",
+   519
+  ],
+  [
+   "INPUT",
+   "",
+   608
+  ],
+  [
+   "INPUT",
+   "",
+   669
+  ],
+  [
+   "TEXTAREA",
+   "Who is this from?",
+   730
+  ],
+  [
+   "INPUT",
+   "",
+   806
+  ],
+  [
+   "TEXTAREA",
+   "Who is this to?",
+   848
+  ],
+  [
+   "INPUT",
+   "",
+   948
+  ],
+  [
+   "TEXTAREA",
+   "(optional)",
+   990
+  ],
+  [
+   "INPUT",
+   "",
+   1074
+  ],
+  [
+   "INPUT",
+   "",
+   1074
+  ],
+  [
+   "INPUT",
+   "",
+   1116
+  ],
+  [
+   "INPUT",
+   "",
+   1116
+  ],
+  [
+   "INPUT",
+   "",
+   1158
+  ],
+  [
+   "INPUT",
+   "",
+   1158
+  ],
+  [
+   "INPUT",
+   "",
+   1200
+  ],
+  [
+   "INPUT",
+   "",
+   1200
+  ],
+  [
+   "TEXTAREA",
+   "Description of item/service...",
+   1303
+  ],
+  [
+   "INPUT",
+   "",
+   1377
+  ],
+  [
+   "INPUT",
+   "",
+   1378
+  ],
+  [
+   "BUTTON",
+   "Line Item",
+   1491
+  ],
+  [
+   "INPUT",
+   "",
+   1559
+  ],
+  [
+   "TEXTAREA",
+   "Notes - any relevant information not already covered",
+   1601
+  ],
+  [
+   "INPUT",
+   "",
+   1685
+  ],
+  [
+   "TEXTAREA",
+   "Terms and conditions - late fees, payment methods, delivery schedule",
+   1727
+  ],
+  [
+   "INPUT",
+   "",
+   1819
+  ],
+  [
+   "BUTTON",
+   "",
+   1861
+  ],
+  [
+   "INPUT",
+   "",
+   1861
+  ],
+  [
+   "INPUT",
+   "",
+   1862
+  ],
+  [
+   "BUTTON",
+   "",
+   1862
+  ],
+  [
+   "BUTTON",
+   "Discount",
+   1905
+  ],
+  [
+   "BUTTON",
+   "Shipping",
+   1905
+  ],
+  [
+   "INPUT",
+   "",
+   1947
+  ],
+  [
+   "INPUT",
+   "",
+   1993
+  ],
+  [
+   "INPUT",
+   "",
+   1994
+  ],
+  [
+   "INPUT",
+   "",
+   2056
+  ],
+  [
+   "BUTTON",
+   "Save & Send",
+   2133
+  ],
+  [
+   "BUTTON",
+   "Download",
+   2185
+  ],
+  [
+   "BUTTON",
+   "Invoice Settings",
+   2273
+  ],
+  [
+   "INPUT",
+   "_csrf_token",
+   0
+  ],
+  [
+   "INPUT",
+   "json",
+   0
+  ],
+  [
+   "BUTTON",
+   "Close",
+   0
+  ],
+  [
+   "SELECT",
+   "JanFebMarAprMayJunJulAugSepOct",
+   0
+  ],
+  [
+   "SELECT",
+   "201620172018201920202021202220",
+   0
+  ]
+ ],
+ "from": 9.423,
+ "to": 10.836,
+ "item": 13.487,
+ "qty": 13.948,
+ "rate": 14.564,
+ "settings": 18.027,
+ "selects": [
+  [
+   "",
+   "",
+   2,
+   707
+  ],
+  [
+   "",
+   "",
+   179,
+   787
+  ],
+  [
+   "",
+   "",
+   12,
+   0
+  ],
+  [
+   "",
+   "",
+   21,
+   0
+  ]
+ ],
+ "currency": 19.025,
+ "total": 21.417,
+ "download": 26.095,
+ "dl_name": "Invoice 1.pdf",
+ "end": 30.258,
+ "text": "Toggle navigation\nThank you for invoicing with us!\n\nYour Invoice has been generated! If the invoice did not open automatically then you can find it in your Downloads folder.\n\nWe automatically save invoices that you created recently to your device. This is useful when you need to quickly make an edit to an invoice.\n\nEdit\nHistory\nNew Invoice\nCreate your free account\n\nSave and track your invoices to get paid faster\n\nYour account includes:\n\nTrack when invoices are viewed and paid\nSend payment reminders automatically\nAccess your invoices anytime, anywhere\nInsights on payment patterns\nCreate an account\nShare\n Pin Share Post Share\nUSE INVOICE GENERATOR\nInvoice Generator\nReceipt Generator\nQuote Generator\nEstimate Generator\nCredit Note Generator\nPurchase Order Generator\nSales Order Generator\nProforma Invoice Generator\nTimesheet Generator\nWork Order Generator\nAccount Statement Generator\nPacking Slip Generator\nRESOURCES\nInvoicing Guides\nCalculators\nIndustries\nHelp\nSign In\nSign Up\nDeveloper API\nInvoice with AI\n\n© 2012-2026 Invoice-Generator.com\n\nTerms of Service\n·\nPrivacy Policy\n·\n "
+}
