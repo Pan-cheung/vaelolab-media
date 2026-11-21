@@ -90,7 +90,31 @@ def run_eject(page,t0):
     at(18.9); page.keyboard.type('rice',delay=150)
     glide(page,cx,cy,cx-200,cy+300,20,0.03)
     at(21.95)
-RUN={'cloth-unveil-card':run_cloth,'stubborn-slider':run_stubborn,'eject-clear-input':run_eject}
+def run_scratch(page,t0):
+    T=time.time()
+    def at(t):
+        d=t-(time.time()-T)
+        if d>0: time.sleep(d)
+    _,_,b=center(page,'.sc-foil')
+    page.evaluate('''(b)=>{const old=document.getElementById('rec-dot');const d=old.cloneNode();d.id='rec-dot2';old.style.display='none';document.body.appendChild(d);
+      const Z=parseFloat(getComputedStyle(document.getElementById('rec-inner')).zoom)||1;
+      document.addEventListener('pointermove',e=>{let x=e.clientX,y=e.clientY;const c=document.querySelector('.sc-foil');
+        if(c&&!document.querySelector('.sc-card.is-open')&&x>=b.x&&x<=b.x+b.width&&y>=b.y&&y<=b.y+b.height){x=b.x+(x-b.x)*Z;y=b.y+(y-b.y)*Z;}
+        d.style.left=x+'px';d.style.top=y+'px';},true);
+      document.addEventListener('pointerdown',()=>{d.style.transform='scale(.8)'},true);document.addEventListener('pointerup',()=>{d.style.transform='scale(1)'},true);}''',b)
+    L,R=b['x']+40,b['x']+b['width']-40
+    def row(f,rev=False,steps=22,pause=0.03):
+        y=b['y']+b['height']*f; a,c=(R,L) if rev else (L,R)
+        glide(page,page_pos[0],page_pos[1],a,y,4,0.01); glide(page,a,y,c,y,steps,pause); page_pos[:]=[c,y]
+    page_pos=[L,b['y']+b['height']*0.12]
+    page.mouse.move(*page_pos); page.mouse.down(); mark('scratch',t0)
+    row(0.12,steps=26); page.mouse.up()
+    at(2.6); page.mouse.down(); row(0.36,True,steps=26); page.mouse.up(); mark('peek',t0)
+    at(5.4); page.mouse.down(); row(0.24,steps=30,pause=0.04); page.mouse.up(); mark('reveal',t0)
+    at(9.0); x,y,_=center(page,'.sc-prize strong'); glide(page,page_pos[0],page_pos[1],x,y+120,30,0.03)
+    at(12.0); glide(page,x,y+120,x+120,y+420,30,0.03)
+    at(14.5)
+RUN={'scratch-card-reveal':run_scratch,'cloth-unveil-card':run_cloth,'stubborn-slider':run_stubborn,'eject-clear-input':run_eject}
 tmp=f"/tmp/vrec/{slug}"; shutil.rmtree(tmp,ignore_errors=True)
 with sync_playwright() as p:
     br=p.chromium.launch(args=["--no-sandbox"])
