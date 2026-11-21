@@ -46,11 +46,14 @@ const CURSOR = `
   for (const t of ['Accept', 'Accept all', 'I agree', 'Got it']) { await page.getByRole('button', { name: t }).first().click({ timeout: 1200 }).catch(() => {}); }
   await page.waitForTimeout(800); await snap('clean');
   const url = page.locator('input[placeholder*="http" i], input#qrcodeUrl, input[name*="url" i]').first();
-  try { await url.scrollIntoViewIfNeeded({ timeout: 4000 }); await glideTo(url); await url.click({ timeout: 4000 }); await page.keyboard.press('Control+A'); await page.keyboard.type('https://g.page/r/your-bakery/review', { delay: 60 }); mark('url'); } catch (e) { marks.url_err = String(e).slice(0, 160); }
+  try { await url.scrollIntoViewIfNeeded({ timeout: 4000 }); await glideTo(url); await url.click({ timeout: 4000 }); await url.click({ clickCount: 3 }); await page.keyboard.type('https://vaelolab.com', { delay: 80 }); mark('url'); } catch (e) { marks.url_err = String(e).slice(0, 160); }
   await page.waitForTimeout(800); await snap('url');
   try { const sc = page.getByText('SET COLORS', { exact: false }).first(); await glideTo(sc); await sc.click({ timeout: 4000 }); mark('colors'); await page.waitForTimeout(1500); await snap('colors-open');
-    const ci = page.locator('input[type=text][value^="#"], input.color-input, input[ng-model*="color" i]').first();
-    await glideTo(ci); await ci.click({ timeout: 3000 }); await page.keyboard.press('Control+A'); await page.keyboard.type('#133621', { delay: 90 }); await page.keyboard.press('Enter'); mark('color_set'); } catch (e) { marks.color_err = String(e).slice(0, 160); }
+    marks.color_inputs = await page.evaluate(() => [...document.querySelectorAll('input')].filter(i => /^#/.test(i.value)).map(i => [i.value, i.className.slice(0, 40), Math.round(i.getBoundingClientRect().y)]));
+    const ci = page.locator('input').filter({ has: page.locator('xpath=self::*[starts-with(@value,"#0")]') }).first();
+    const h = await page.evaluateHandle(() => [...document.querySelectorAll('input')].find(i => i.value === '#000000' && i.getBoundingClientRect().width > 0));
+    const el = h.asElement(); const bb = await el.boundingBox(); await page.mouse.move(bb.x + bb.width / 2, bb.y + bb.height / 2, { steps: 18 });
+    await el.click({ clickCount: 3 }); await page.keyboard.type('#133621', { delay: 90 }); await page.keyboard.press('Enter'); mark('color_set'); } catch (e) { marks.color_err = String(e).slice(0, 160); }
   await page.waitForTimeout(1200); await snap('colored');
   marks.dom = await page.evaluate(() => [...document.querySelectorAll('button,a,input')].filter(e => { const b = e.getBoundingClientRect(); return b.width && b.height; }).map(e => [e.tagName, (e.textContent || e.placeholder || e.value || '').trim().slice(0, 30), Math.round(e.getBoundingClientRect().y)]).slice(0, 120)).catch(e => String(e));
   try { const cr = page.getByText('Create QR Code', { exact: false }).first(); await cr.scrollIntoViewIfNeeded({ timeout: 4000 }); await glideTo(cr); await cr.click({ timeout: 4000 }); mark('create'); } catch (e) { marks.create_err = String(e).slice(0, 160); }
@@ -58,6 +61,6 @@ const CURSOR = `
   try { const dl = page.getByText('Download PNG', { exact: false }).first(); await dl.scrollIntoViewIfNeeded({ timeout: 4000 }); await glideTo(dl); await page.waitForTimeout(500);
     const [d] = await Promise.all([page.waitForEvent('download', { timeout: 15000 }).catch(() => null), dl.click({ timeout: 4000 })]);
     mark('download'); if (d) marks.dl_name = d.suggestedFilename(); } catch (e) { marks.dl_err = String(e).slice(0, 160); }
-  await page.waitForTimeout(4000); await snap('after-download');
+  await page.waitForTimeout(1500); await snap('after-download');
   await finish();
 })();
