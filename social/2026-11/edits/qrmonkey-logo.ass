@@ -1,0 +1,33 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Jost Bold V,58,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,14,0,8,90,90,1330,1
+Style: Lab,Jost Bold V,54,&H00213613,&H00213613,&H0069D2EB,&H0069D2EB,0,0,0,0,100,100,0,0,3,10,0,8,90,90,1180,1
+Style: Hook,Jost Bold V,88,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,22,0,8,90,90,1020,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:05.13,Cap,,0,0,0,,Your logo, sitting right in the middle of a QR code that costs you nothing.
+Dialogue: 0,0:00:05.13,0:00:09.00,Cap,,0,0,0,,This is QRCode Monkey, and we didn't make an account.
+Dialogue: 0,0:00:09.00,0:00:11.26,Cap,,0,0,0,,Paste the page you want people to land on.
+Dialogue: 0,0:00:11.26,0:00:14.19,Cap,,0,0,0,,Open Set Colors and type your brand green.
+Dialogue: 0,0:00:14.19,0:00:16.09,Cap,,0,0,0,,The whole code turns green.
+Dialogue: 0,0:00:16.09,0:00:18.99,Cap,,0,0,0,,Under Add Logo Image, upload your logo.
+Dialogue: 0,0:00:18.99,0:00:24.11,Cap,,0,0,0,,PNG, JPG, GIF or SVG, up to two megabytes.
+Dialogue: 0,0:00:24.11,0:00:26.41,Cap,,0,0,0,,Drag the quality slider toward High.
+Dialogue: 0,0:00:26.41,0:00:29.78,Cap,,0,0,0,,The site says that gives you a PNG with print quality.
+Dialogue: 0,0:00:29.78,0:00:33.49,Cap,,0,0,0,,Click Create QR Code, then Download PNG.
+Dialogue: 0,0:00:33.49,0:00:36.38,Cap,,0,0,0,,Scan the preview with your own phone before you print.
+Dialogue: 0,0:00:36.38,0:00:42.42,Cap,,0,0,0,,The site says these static codes are free for commercial use, never expire, and have no scan limit.
+Dialogue: 0,0:00:42.42,0:00:45.95,Cap,,0,0,0,,The catch: you can't change where it points once it's printed.
+Dialogue: 0,0:00:45.95,0:00:49.57,Cap,,0,0,0,,Scan counts and editable codes live in their paid PRO version,
+Dialogue: 0,0:00:49.57,0:00:52.15,Cap,,0,0,0,,and an ad for it pops up after you download.
+Dialogue: 0,0:00:52.15,0:00:55.63,Cap,,0,0,0,,Send this to the café owner printing new table cards for December.
+Dialogue: 1,0:00:00.00,0:00:05.13,Hook,,0,0,0,,Your logo QR code\N{\c&H0069D2EB&}free
+Dialogue: 1,0:00:42.42,0:00:45.95,Lab,,0,0,0,,Can't edit it after printing
+Dialogue: 1,0:00:49.57,0:00:52.15,Lab,,0,0,0,,Ad for their paid PRO version
