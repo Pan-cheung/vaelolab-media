@@ -62,7 +62,12 @@ const FILES = ['1-quote.pdf', '2-price-list.pdf', '3-terms.pdf'].map(f => path.r
   await page.waitForTimeout(5500); await snap('uploaded'); mark('uploaded');
   // show the three files: slow scroll over the file list if it is taller than the screen
   try { const cards = page.locator('.file'); marks.cards = await cards.count(); if (marks.cards) { await glideTo(cards.nth(0), 16); await page.waitForTimeout(900); await glideTo(cards.nth(Math.min(2, marks.cards - 1)), 24); } } catch (e) { marks.cards_err = String(e).slice(0, 200); }
-  await page.waitForTimeout(1500); await snap('files');
+  await page.waitForTimeout(800);
+  // scroll down so the third file shows, then back up
+  try { await page.mouse.move(180, 300, { steps: 12 }); for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, 70); await page.waitForTimeout(120); } mark('scrolled_down'); await page.waitForTimeout(600); await snap('third');
+    await glideTo(page.locator('.file').nth(2), 16); await page.waitForTimeout(1400);
+    for (let i = 0; i < 6; i++) { await page.mouse.wheel(0, -70); await page.waitForTimeout(120); } mark('scrolled_up'); } catch (e) { marks.scroll_err = String(e).slice(0, 200); }
+  await page.waitForTimeout(1200); await snap('files');
   marks.files_text = (await page.evaluate(() => document.body.innerText).catch(() => '')).slice(0, 3000);
   const merge = page.locator('#processTask, button:has-text("Merge PDF")').first();
   if (!(await merge.isVisible().catch(() => false))) {
@@ -78,13 +83,15 @@ const FILES = ['1-quote.pdf', '2-price-list.pdf', '3-terms.pdf'].map(f => path.r
     const [d] = await Promise.all([page.waitForEvent('download', { timeout: 15000 }).catch(() => null), dl.click({ timeout: 5000 })]);
     mark('download'); if (d) { marks.dl_name = d.suggestedFilename(); const p = path.join(out, 'merged.pdf'); await d.saveAs(p).catch(() => {}); try { marks.dl_bytes = fs.statSync(p).size; } catch (e) {} } } catch (e) { marks.dl_err = String(e).slice(0, 200); }
   await page.waitForTimeout(3500); await snap('after-download');
+  try { const p = path.join(out, 'merged.pdf'); marks.pdfinfo = execFileSync('pdfinfo', [p]).toString().slice(0, 600); execFileSync('pdftoppm', ['-r', '60', '-png', p, path.join(out, 'shot-90-mergedpage')]); } catch (e) { marks.pdftoppm_err = String(e).slice(0, 200); }
   // pricing page: the free plan limits for Merge PDF
   await page.goto('https://www.ilovepdf.com/pricing', { waitUntil: 'domcontentloaded', timeout: 60000 }).catch(e => { marks.pricing_err = String(e).slice(0, 200); });
   await page.waitForTimeout(4000); mark('pricing'); await snap('pricing');
   await sweep(page.getByText('Limited document processing', { exact: false }).first(), 'limited');
   await page.waitForTimeout(2500); await snap('limited');
-  await sweep(page.getByText('Merge PDF', { exact: true }).last(), 'merge_row');
-  await page.waitForTimeout(3000); await snap('merge-row');
+  await page.waitForTimeout(800);
+  await sweep(page.getByText('removes ads', { exact: false }).first(), 'removes_ads');
+  await page.waitForTimeout(3000); await snap('removes-ads');
   marks.pricing_text = (await page.evaluate(() => document.body.innerText).catch(() => '')).slice(0, 12000);
   await cdp.send('Page.stopScreencast').catch(() => {});
   mark('end');
