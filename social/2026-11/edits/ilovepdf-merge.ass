@@ -1,0 +1,31 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Top,Jost Bold V,66,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,14,0,8,90,90,200,1
+Style: Low,Jost Bold V,66,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,14,0,8,90,90,1150,1
+Style: Lab,Jost Bold V,52,&H00213613,&H00213613,&H0069D2EB,&H0069D2EB,0,0,0,0,100,100,0,0,3,10,0,8,90,90,1195,1
+Style: Hook,Jost Bold V,92,&H00EFF3F2,&H00EFF3F2,&H00213613,&H00213613,0,0,0,0,100,100,0,0,3,22,0,8,90,90,1080,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,0:00:03.00,Hook,,0,0,0,,3 PDFs. 1 file.\N{\c&H0069D2EB&}No account.
+Dialogue: 0,0:00:03.00,0:00:08.40,Top,,0,0,0,,Your quote, price list and terms sit in three separate files, and your customer has to guess the order.
+Dialogue: 0,0:00:08.40,0:00:12.50,Low,,0,0,0,,On your phone, open iLovePDF and pick Merge PDF.
+Dialogue: 0,0:00:12.50,0:00:15.40,Low,,0,0,0,,Tap Select PDF files and choose all three.
+Dialogue: 0,0:00:15.40,0:00:17.20,Top,,0,0,0,,They line up in the order you picked them.
+Dialogue: 0,0:00:17.20,0:00:18.70,Top,,0,0,0,,Drag a file to move it.
+Dialogue: 0,0:00:18.70,0:00:20.30,Top,,0,0,0,,Tap Merge PDF.
+Dialogue: 0,0:00:20.30,0:00:23.60,Low,,0,0,0,,A few seconds later, tap Download merged PDF.
+Dialogue: 0,0:00:23.60,0:00:25.90,Low,,0,0,0,,One file, ready to attach.
+Dialogue: 0,0:00:25.90,0:00:28.00,Low,,0,0,0,,We didn't sign in for any of this.
+Dialogue: 0,0:00:28.00,0:00:30.40,Low,,0,0,0,,The catch: the free plan is limited.
+Dialogue: 0,0:00:30.40,0:00:34.40,Top,,0,0,0,,Its pricing page caps a merge at 25 files and 100 megabytes,
+Dialogue: 0,0:00:34.40,0:00:38.20,Top,,0,0,0,,and you see ads unless you pay for Premium, which is priced in US dollars.
+Dialogue: 0,0:00:38.20,0:00:44.00,Low,,0,0,0,,Send this to the caterer who still emails three attachments with every quote.
+Dialogue: 1,0:00:30.40,0:00:34.40,Lab,,0,0,0,,Free: 25 files, 100 MB per merge
+Dialogue: 1,0:00:34.40,0:00:38.20,Lab,,0,0,0,,Premium removes ads. Priced in US$
